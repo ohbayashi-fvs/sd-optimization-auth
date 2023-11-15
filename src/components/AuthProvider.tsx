@@ -7,7 +7,6 @@ import {
   useState,
 } from "react";
 import { Session } from "@supabase/supabase-js";
-import { useRouter } from "next/router";
 
 type AuthCtx = {
   session: Session;
@@ -32,13 +31,11 @@ type AuthCtx = {
 const AuthContext = createContext<AuthCtx>(null);
 const useAuth = () => useContext(AuthContext);
 
-console.log(useAuth);
-
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const auth = supabaseAdmin.auth;
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [session, setSession] = useState<Session>();
+  const [session, setSession] = useState<Session>(null);
 
   //session処理の実行中は画面を表示しないようにする
   useEffect(() => {

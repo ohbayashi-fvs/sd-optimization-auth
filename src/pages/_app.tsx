@@ -15,9 +15,9 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-const noAuthRequired = ["/login", "/signup"];
+const noAuthRequired = ["/login"];
 
-export default function App({ Component, pageProps }: AppPropsWithLayout) {
+export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
   return (
     <AuthProvider>

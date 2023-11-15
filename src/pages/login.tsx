@@ -3,6 +3,9 @@ import Link from "next/link";
 import { useAuth } from "../components/AuthProvider";
 import { useForm } from "react-hook-form";
 import { LoginForm } from "@/types/Auth";
+import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useEffect, useState } from "react";
+
 export default function Login() {
   const { session, login } = useAuth();
   const {
