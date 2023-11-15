@@ -1,0 +1,40 @@
+{
+  "name": "supabase",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "npm run db:supabase",
+    "reset": "npx supabase db reset",
+    "dbml": "dbdocs build sd.dbml --project sd-optimization",
+    "dbml:login": "npx dbdocs login",
+    "local:dump": "npx supabase db dump --db-url postgresql://postgres:postgres@localhost:54322/postgres -f supabase/backup/seeds/local_$(date +%Y%m%d_%H%M).sql --data-only",
+    "staging:link": "npx supabase link --project-ref qdoqudftxecmfjhaowka --password HY2ITx96DSfOQpg0 --debug",
+    "staging:push": "npx supabase db push --debug",
+    "staging:reset": "npx supabase db reset --db-url postgresql://postgres:HY2ITx96DSfOQpg0@db.qdoqudftxecmfjhaowka.supabase.co/postgres",
+    "staging": "npm run staging:push",
+    "start": "npx supabase start -x vector,edge-runtime,realtime",
+    "stop": "npx supabase stop",
+    "sql": "dbml2sql sd.dbml --postgres -o migrations/20230626060237_local.sql",
+    "type": "npx supabase gen types typescript --local > ../src/type.ts",
+    "db:seed:watch": "nodemon --watch seeds/development/seeds.js --exec \"npm run db:seed\"",
+    "staging:dump": "npx supabase db dump --data-only -f supabase/backup/seeds/$(date +%Y%m%d_%H%M).sql"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^8.0.2",
+    "knex": "^2.4.2",
+    "pg": "^8.10.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@dbml/cli": "^2.5.3",
+    "dbdocs": "^0.7.5",
+    "dotenv-cli": "^7.2.1",
+    "nodemon": "^2.0.22",
+    "supabase": "^1.93.0"
+  }
+}
