@@ -1,25 +1,23 @@
 import { useRouter } from "next/router";
-import { useAuth } from "../components/auth/AuthProvider";
 import { useForm } from "react-hook-form";
 import { LoginForm } from "@/types/Auth";
 
 export default function Login() {
-  const { session, login } = useAuth();
+  // const { session, login } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginForm>();
   const router = useRouter();
-  if (session) {
-    router.push("/");
-  }
+  // if (session) {
+  //   router.push("/");
+  // }
   const onSubmit = async (val: LoginForm) => {
-    if (login) {
-      await login({ email: val.email, password: val.password }).then(() =>
-        router.push("/")
-      );
-    }
+    await fetch("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ email: val.email, password: val.password }),
+    }).then(() => router.push("/"));
   };
 
   return (

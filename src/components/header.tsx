@@ -1,6 +1,5 @@
 // import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useRouter } from "next/router";
-import { supabaseClient } from "../lib/supabase";
 import Image from "next/image";
 import Link from "next/link";
 // import type { MenuProps } from 'antd'
@@ -34,8 +33,9 @@ export const Header = () => {
           href={""}
           onClick={async (e) => {
             e.preventDefault();
-            await supabaseClient.auth.signOut();
-            router.push("/login", "/");
+            await fetch("/api/auth/logout", {
+              method: "POST",
+            }).then(() => router.push("/login"));
           }}
           className="text-white pr-[1rem] bg-header no-underline"
         >

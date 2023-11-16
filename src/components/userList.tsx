@@ -1,37 +1,12 @@
+import { user } from "@/types/User";
 import Image from "next/image";
+import { FC } from "react";
 
-type user = {
-  id: number;
-  username: string;
-  email: string;
-  password: string;
-  lastlogin: Date;
+type Props = {
+  users: user[];
 };
 
-export const UserList = () => {
-  const testUserList: user[] = [
-    {
-      id: 100,
-      username: "test",
-      email: "hoge@com",
-      password: "hoge1111",
-      lastlogin: new Date(),
-    },
-    {
-      id: 200,
-      username: "test2",
-      email: "hoge2@com",
-      password: "hoge2222",
-      lastlogin: new Date(),
-    },
-    {
-      id: 300,
-      username: "test3",
-      email: "hoge3@com",
-      password: "hoge3333",
-      lastlogin: new Date(),
-    },
-  ];
+export const UserList: FC<Props> = ({ users }) => {
   return (
     <>
       <table className="mx-auto my-[100px] px-[10px] border-collapse">
@@ -52,14 +27,16 @@ export const UserList = () => {
           </tr>
         </thead>
         <tbody>
-          {testUserList.map((user: user) => (
+          {users.map((user: user) => (
             <tr
               key={user.id}
               className="border-gray-100 border-t-0 border-x-0 border-solid h-[55px]"
             >
-              <td className="pl-[16px]">{`${user.username}`}</td>
+              <td className="pl-[16px]">{`${user.app_metadata.user_name}`}</td>
               <td className="pl-[16px]">{`${user.email}`}</td>
-              <td className="pl-[16px]">{`${user.lastlogin.toLocaleDateString()}`}</td>
+              <td className="pl-[16px]">{`${new Date(
+                user.last_sign_in_at
+              ).toLocaleDateString("ja-JP")}`}</td>
               <td className="pl-[16px] pt-[16px]">
                 <Image
                   src={"/images/edit_icon@2x.png"}

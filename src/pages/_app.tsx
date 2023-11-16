@@ -1,7 +1,7 @@
 import { AppProps } from "next/app";
 import { NextPage } from "next";
 import { ReactNode, ReactElement, Suspense } from "react";
-import { AuthProvider } from "../components/auth/AuthProvider";
+// import { AuthProvider } from "../components/auth/AuthSample";
 import { useRouter } from "next/router";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 import "../styles/globals.css";
@@ -20,15 +20,17 @@ const noAuthRequired = ["/login"];
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
   return (
-    <AuthProvider>
-      {noAuthRequired.includes(router.pathname) ? (
+    <>
+      <Header />
+      <Component {...pageProps} />
+      {/* {noAuthRequired.includes(router.pathname) ? (
         <Component {...pageProps} />
       ) : (
         <ProtectedRoute>
           <Header />
           <Component {...pageProps} />
         </ProtectedRoute>
-      )}
-    </AuthProvider>
+      )} */}
+    </>
   );
 }
