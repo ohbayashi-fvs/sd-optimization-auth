@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useAuth } from "../components/AuthProvider";
+import { useAuth } from "../components/auth/AuthProvider";
 import { useForm } from "react-hook-form";
 export default function Login() {
   const { session, signup } = useAuth();

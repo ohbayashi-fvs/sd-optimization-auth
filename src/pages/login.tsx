@@ -1,10 +1,7 @@
 import { useRouter } from "next/router";
-import Link from "next/link";
-import { useAuth } from "../components/AuthProvider";
+import { useAuth } from "../components/auth/AuthProvider";
 import { useForm } from "react-hook-form";
 import { LoginForm } from "@/types/Auth";
-import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useEffect, useState } from "react";
 
 export default function Login() {
   const { session, login } = useAuth();
@@ -17,10 +14,12 @@ export default function Login() {
   if (session) {
     router.push("/");
   }
-  const onSubmit = async (val: any) => {
-    await login({ email: val.email, password: val.password }).then(() =>
-      router.push("/")
-    );
+  const onSubmit = async (val: LoginForm) => {
+    if (login) {
+      await login({ email: val.email, password: val.password }).then(() =>
+        router.push("/")
+      );
+    }
   };
 
   return (

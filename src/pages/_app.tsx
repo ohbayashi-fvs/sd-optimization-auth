@@ -1,9 +1,9 @@
 import { AppProps } from "next/app";
 import { NextPage } from "next";
 import { ReactNode, ReactElement, Suspense } from "react";
-import { AuthProvider } from "../components/AuthProvider";
+import { AuthProvider } from "../components/auth/AuthProvider";
 import { useRouter } from "next/router";
-import ProtectedRoute from "../components/ProtectedRoute";
+import ProtectedRoute from "../components/auth/ProtectedRoute";
 import "../styles/globals.css";
 import { Header } from "@/components/header";
 

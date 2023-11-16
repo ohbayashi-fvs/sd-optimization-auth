@@ -1,4 +1,4 @@
-import { supabaseAdmin } from "../lib/supabase";
+import { supabaseAdmin } from "../../lib/supabase";
 import {
   ReactNode,
   useContext,
@@ -8,7 +8,7 @@ import {
 } from "react";
 import { Session } from "@supabase/supabase-js";
 
-type AuthCtx = {
+type AuthCtx = Partial<{
   session: Session;
   loading: boolean;
   setLoading: any;
@@ -27,15 +27,16 @@ type AuthCtx = {
     password: string;
   }) => Promise<void>;
   logout: () => Promise<void>;
-};
-const AuthContext = createContext<AuthCtx>(null);
+}>;
+
+const AuthContext = createContext<AuthCtx>({});
 const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const auth = supabaseAdmin.auth;
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [session, setSession] = useState<Session>(null);
+  const [session, setSession] = useState<Session | undefined>(undefined);
 
   //session処理の実行中は画面を表示しないようにする
   useEffect(() => {
@@ -54,9 +55,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     const {
       data: { subscription },
     } = auth.onAuthStateChange((_event, session) => {
-      setSession(session);
+      setSession(session ? session : undefined);
       if (_event === "SIGNED_OUT") {
-        setSession(null);
+        setSession(undefined);
       }
     });
     return () => {
@@ -84,7 +85,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     await auth.signUp({ email: email, password: password });
   };
 
-  const logout = () => {
+  const logout = async () => {
     auth.signOut();
   };
 
