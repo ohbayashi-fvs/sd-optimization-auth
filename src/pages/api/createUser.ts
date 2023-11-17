@@ -15,13 +15,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       supabaseKey: process.env.NEXT_SUPABASE_SERVICE_ROLE_KEY || "",
     }
   );
-  console.log(req.body);
-  console.log(req.method);
+
+  const userData = JSON.parse(req.body);
 
   const { data, error } = await supabaseServerClient.auth.admin.createUser({
-    user_metadata: { name: req.body.name },
-    email: req.body.email,
-    password: req.body.password,
+    app_metadata: { user_name: userData.user_name },
+    email: userData.email,
+    password: userData.password,
   });
   console.log(error?.message);
 

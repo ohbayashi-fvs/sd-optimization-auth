@@ -19,7 +19,7 @@ export const CreateUser = () => {
     await fetch("/api/createUser", {
       method: "POST",
       body: JSON.stringify({
-        name: val.app_metadata.user_name,
+        user_name: val.app_metadata.user_name,
         email: val.email,
         password: val.password,
       }),
