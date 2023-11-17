@@ -1,9 +1,9 @@
-import { user } from "@/types/User";
+import { List } from "@/types/user/User";
 import Image from "next/image";
 import { FC } from "react";
 
 type Props = {
-  users: user[];
+  users: List[];
 };
 
 export const UserList: FC<Props> = ({ users }) => {
@@ -27,7 +27,7 @@ export const UserList: FC<Props> = ({ users }) => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user: user) => (
+          {users.map((user: List) => (
             <tr
               key={user.id}
               className="border-gray-100 border-t-0 border-x-0 border-solid h-[55px]"

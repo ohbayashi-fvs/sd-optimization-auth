@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { LoginForm } from "@/types/Auth";
+import { LoginForm } from "@/types/user/Auth";
 
 export default function Login() {
   // const { session, login } = useAuth();
