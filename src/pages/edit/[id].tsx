@@ -1,22 +1,40 @@
-import { Create } from "@/types/user/User";
+import { Edit, User } from "@/types/user/User";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-export const CreateUser = () => {
-  // const { session, signup } = useAuth();
+export default function EditUser() {
   const {
     register,
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<Create>();
+  } = useForm<Edit>();
+
+  const [user, setUser] = useState<User>();
 
   const router = useRouter();
 
-  const onSubmit = async (val: Create) => {
-    await fetch("/api/createUser", {
+  useEffect(() => {
+    const getRowData = async () => {
+      const data = await fetch("/api/getUser", {
+        method: "POST",
+        body: JSON.stringify({
+          id: router.query.id,
+        }),
+      }).then((data) => data.json());
+
+      setUser(data.users.user);
+    };
+
+    getRowData();
+  }, [router.isReady]);
+
+  const onSubmit = async (val: Edit) => {
+    await fetch("/api/editUser", {
       method: "POST",
       body: JSON.stringify({
+        id: router.query.id,
         user_name: val.app_metadata.user_name,
         email: val.email,
         password: val.password,
@@ -31,13 +49,14 @@ export const CreateUser = () => {
           <label className="mb-[2rem] mr-[1rem] text-[1.1rem]">
             ユーザー名
           </label>
-          <div className="pl-[3.5rem]">
+          <div className="pl-[6.8rem]">
             <input
               {...register("app_metadata.user_name", {
                 required: "※入力は必須です",
               })}
               className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
               type="text"
+              defaultValue={user ? user.app_metadata.user_name : ""}
             />
             <div className="text-red-500">
               {errors.app_metadata?.user_name &&
@@ -49,12 +68,12 @@ export const CreateUser = () => {
           <label className="mb-[2rem] text-[1.1rem] min-w-[5rem]">
             メールアドレス
           </label>
-          <div className="pl-[2.5rem]">
+          <div className="pl-[5.7rem]">
             <input
               {...register("email", { required: "※入力は必須です" })}
               className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
-              type="text"
-              name="email"
+              type="email"
+              defaultValue={user ? user.email : ""}
             />
             <div className="text-red-500">
               {errors.email && errors.email.message}
@@ -62,13 +81,13 @@ export const CreateUser = () => {
           </div>
         </div>
         <div className="flex justify-start">
-          <label className="mb-[2rem] text-[1.1rem]">パスワード</label>
+          <label className="mb-[2rem] text-[1.1rem]">新しいパスワード</label>
           <div className="pl-[4.5rem]">
             <input
               {...register("password", { required: "※入力は必須です" })}
               className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
               type="password"
-              name="password"
+              defaultValue={""}
             />
             <div className="text-red-500">
               {errors.password && errors.password.message}
@@ -76,7 +95,9 @@ export const CreateUser = () => {
           </div>
         </div>
         <div className="flex justify-start">
-          <label className="mb-[2rem] text-[1.1rem]">パスワード（確認）</label>
+          <label className="mb-[2rem] text-[1.1rem]">
+            新しいパスワード（確認）
+          </label>
           <div>
             <input
               {...register("passwordConf", {
@@ -96,15 +117,24 @@ export const CreateUser = () => {
             </div>
           </div>
         </div>
-        <div className="text-center">
+        <div className="flex justify-between">
+          <button
+            type="button"
+            onClick={() => {
+              router.push("/");
+            }}
+            className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            一覧に戻る
+          </button>
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
-            追加する
+            保存する
           </button>
         </div>
       </form>
     </div>
   );
-};
+}

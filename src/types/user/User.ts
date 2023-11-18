@@ -1,5 +1,5 @@
-export type List = {
-  id: number;
+export type User = {
+  id: string;
   app_metadata: {
     user_name: string;
   };
@@ -8,6 +8,15 @@ export type List = {
 };
 
 export type Create = {
+  app_metadata: {
+    user_name: string;
+  };
+  email: string;
+  password: string;
+  passwordConf: string;
+};
+
+export type Edit = {
   app_metadata: {
     user_name: string;
   };

@@ -23,7 +23,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     email: userData.email,
     password: userData.password,
   });
-  console.log(error?.message);
 
-  res.status(200).json({ data: data });
+  res.status(200).json(data ? data : error?.message);
 };
