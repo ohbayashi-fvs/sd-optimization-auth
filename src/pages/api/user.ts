@@ -13,6 +13,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     data: { user },
   } = await supabaseServerClient.auth.getUser();
 
+  console.log(user);
+
   if (req.method?.toLocaleLowerCase() === "POST") {
     res.status(200).json({ id: user?.id ?? "id表示" });
   }

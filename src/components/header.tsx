@@ -35,7 +35,7 @@ export const Header = () => {
             e.preventDefault();
             await fetch("/api/auth/logout", {
               method: "POST",
-            }).then(() => router.push("/login"));
+            }).then((res) => router.push("/login"));
           }}
           className="text-white pr-[1rem] bg-header no-underline"
         >

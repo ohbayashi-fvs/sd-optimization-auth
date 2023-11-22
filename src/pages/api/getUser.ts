@@ -1,7 +1,8 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { Database } from "@/types";
 import { User } from "@/types/user/User";
+import { supabaseAccessUrl, supabaseServiceRoleKey } from "./lib/supabase";
+import { checkLogin } from "./auth/checkLogin";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -11,8 +12,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res,
     },
     {
-      supabaseUrl: process.env.NEXT_SUPABASE_URL || "",
-      supabaseKey: process.env.NEXT_SUPABASE_SERVICE_ROLE_KEY || "",
+      supabaseUrl: supabaseAccessUrl,
+      supabaseKey: supabaseServiceRoleKey,
     }
   );
 
@@ -22,5 +23,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     user.id
   );
 
-  res.status(200).json({ users: data ? data : error?.message });
+  // session確認
+  const session = await checkLogin(req, res);
+
+  if (session) {
+    res.status(200).json({ users: data });
+  } else {
+    res.status(401).json({});
+  }
 };

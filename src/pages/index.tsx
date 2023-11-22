@@ -1,21 +1,28 @@
-import { Inter } from "next/font/google";
 import Head from "next/head";
 import { UserList } from "@/components/userList";
 import { CreateUser } from "@/components/createUser";
 import { useEffect, useState } from "react";
-
-const inter = Inter({ subsets: ["latin"] });
+import { useRouter } from "next/router";
 
 export default function Home() {
   const [isView, setIsView] = useState(0);
   const [title, setTitle] = useState("信号電材ユーザー一覧");
   const [users, setUsers] = useState([]);
+  const [isSession, setSession] = useState(false);
 
+  const router = useRouter();
   useEffect(() => {
     const fetchUser = async () => {
-      const data = await fetch("/api/getUsers").then((data) => data.json());
+      const res = await fetch("/api/getUsers", { method: "POST" });
+      const usersData = await res.json();
 
-      setUsers(data.users);
+      setUsers(usersData.users);
+
+      if (res.status === 200) {
+        setSession(true);
+      } else {
+        router.push("/login");
+      }
     };
     fetchUser();
   }, []);
@@ -31,37 +38,45 @@ export default function Home() {
   };
 
   return (
-    <>
-      <Head>
-        <title>信号電材ユーザー管理アプリ</title>
-      </Head>
-      <div className="text-[1rem] leading-[3rem]">
-        <div className="flex w-full items-center justify-between">
-          <div className="w-1/3">
-            <h1 className="ml-[2rem] text-[1.5rem] font-normal">{title}</h1>
+    <div>
+      <>
+        <Head>
+          <title>信号電材ユーザー管理アプリ</title>
+        </Head>
+        <div className="text-[1rem] leading-[3rem]">
+          <div className="flex w-full items-center justify-between">
+            <div className="w-1/3">
+              <h1 className="ml-[2rem] text-[1.5rem] font-normal">{title}</h1>
+            </div>
+            <div className="flex w-1/3 justify-center text-[1.2rem]">
+              <span className="px-[20px]">
+                <button onClick={ListView}>一覧表示</button>
+              </span>
+              <span className="px-[20px]">
+                <button onClick={CreateView}>新規作成</button>
+              </span>
+            </div>
+            <div className="w-1/3">ログイン中のユーザー：</div>
           </div>
-          <div className="flex w-1/3 justify-center text-[1.2rem]">
-            <span className="px-[20px]">
-              <button onClick={ListView}>一覧表示</button>
-            </span>
-            <span className="px-[20px]">
-              <button onClick={CreateView}>新規作成</button>
-            </span>
-          </div>
-          <div className="w-1/3"></div>
+          <hr />
+          {/* 一覧表示 or 新規作成 */}
+          {isSession ? (
+            <>
+              {isView === 0 ? (
+                <>
+                  <UserList users={users} />
+                </>
+              ) : (
+                <>
+                  <CreateUser />
+                </>
+              )}
+            </>
+          ) : (
+            <>...Loading</>
+          )}
         </div>
-        <hr />
-        {/* 一覧表示 or 新規作成 */}
-        {isView === 0 ? (
-          <>
-            <UserList users={users} />
-          </>
-        ) : (
-          <>
-            <CreateUser />
-          </>
-        )}
-      </div>
-    </>
+      </>
+    </div>
   );
 }

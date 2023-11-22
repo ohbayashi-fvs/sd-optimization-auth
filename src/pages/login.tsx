@@ -3,21 +3,26 @@ import { useForm } from "react-hook-form";
 import { Login } from "@/types/user/Auth";
 
 export default function Login() {
-  // const { session, login } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Login>();
+
   const router = useRouter();
-  // if (session) {
-  //   router.push("/");
-  // }
+
+  // urlでログインに遷移時にもsessionの有無を確認して遷移させるか、ログアウトさせる。
+
+  // ログイン
   const onSubmit = async (val: Login) => {
-    await fetch("/api/auth/login", {
+    const res = await fetch("/api/auth/login", {
       method: "POST",
       body: JSON.stringify({ email: val.email, password: val.password }),
-    }).then(() => router.push("/"));
+    });
+
+    if (res.status === 200) {
+      router.push("/");
+    }
   };
 
   return (

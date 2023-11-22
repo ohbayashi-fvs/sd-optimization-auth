@@ -1,29 +1,22 @@
 import { AppProps } from "next/app";
-import { useRouter } from "next/router";
 import "../styles/globals.css";
 import { Header } from "@/components/header";
-import { SessionProvider } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const noAuthRequired = ["/login"];
 
-export default function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   return (
     <>
-      <Header />
-      <Component {...pageProps} />
-
-      {/* {noAuthRequired.includes(router.pathname) ? (
+      {noAuthRequired.includes(router.pathname) ? (
         <Component {...pageProps} />
       ) : (
-        <SessionProvider session={session}>
+        <div>
           <Header />
           <Component {...pageProps} />
-        </SessionProvider>
-      )} */}
+        </div>
+      )}
     </>
   );
 }

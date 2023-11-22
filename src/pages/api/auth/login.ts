@@ -2,6 +2,8 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Login } from "@/types/user/Auth";
+import { supabaseAccessUrl, supabaseServiceRoleKey } from "../lib/supabase";
+import { checkLogin } from "./checkLogin";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -11,24 +13,23 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res,
     },
     {
-      supabaseUrl: process.env.NEXT_SUPABASE_URL || "",
-      supabaseKey: process.env.NEXT_SUPABASE_SERVICE_ROLE_KEY || "",
+      supabaseUrl: supabaseAccessUrl,
+      supabaseKey: supabaseServiceRoleKey,
     }
   );
+  const loginData = JSON.parse(req.body);
 
-  const {
-    data: { user },
-    error,
-  } = await supabaseServerClient.auth.signInWithPassword({
-    email: req.body.email,
-    password: req.body.password,
-  });
-  const { data } = await supabaseServerClient.auth.updateUser({
-    data: { last_sign_in_at: new Date() },
+  const { data } = await supabaseServerClient.auth.signInWithPassword({
+    email: loginData.email,
+    password: loginData.password,
   });
 
-  res.status(200).json({
-    signIn: user ? user.id : error?.message,
-    last_sign_in_at: data ? data.user?.last_sign_in_at : "nothing",
-  });
+  // session確認
+  const session = await checkLogin(req, res);
+
+  if (session) {
+    res.status(200).json({ data: data });
+  } else {
+    res.status(401).json({});
+  }
 };

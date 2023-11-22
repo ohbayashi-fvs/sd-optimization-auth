@@ -11,7 +11,7 @@ export type Logout = {
 };
 
 export type AuthCtx = Partial<{
-  session: Session;
-  loading: boolean;
+  session: Session | undefined;
+  loading: boolean | undefined;
   setLoading: any;
 }>;

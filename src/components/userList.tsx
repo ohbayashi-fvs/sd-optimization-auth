@@ -41,9 +41,13 @@ export const UserList: FC<Props> = ({ users }) => {
             >
               <td className="pl-[16px]">{`${user.app_metadata.user_name}`}</td>
               <td className="pl-[16px]">{`${user.email}`}</td>
-              <td className="pl-[16px]">{`${new Date(
-                user.last_sign_in_at
-              ).toLocaleDateString("ja-JP")}`}</td>
+              <td className="pl-[16px]">
+                {user.last_sign_in_at
+                  ? `${new Date(user.last_sign_in_at).toLocaleDateString(
+                      "ja-JP"
+                    )}`
+                  : "-"}
+              </td>
               <td className="pl-[16px] pt-[16px]">
                 <button
                   type="button"
