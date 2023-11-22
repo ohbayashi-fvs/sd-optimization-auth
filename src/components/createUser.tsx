@@ -14,14 +14,16 @@ export const CreateUser = () => {
   const router = useRouter();
 
   const onSubmit = async (val: Create) => {
-    await fetch("/api/createUser", {
+    const res = await fetch("/api/createUser", {
       method: "POST",
       body: JSON.stringify({
         user_name: val.app_metadata.user_name,
         email: val.email,
         password: val.password,
       }),
-    }).then(() => router.push("/"));
+    });
+    res.status === 200 && router.push("/");
+    res.status === 401 && router.push("/login");
   };
 
   return (
@@ -82,6 +84,7 @@ export const CreateUser = () => {
                 })}
                 className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
                 type="text"
+                id="user_name"
               />
               <div className="text-red-500">
                 {errors.app_metadata?.user_name &&
@@ -97,8 +100,10 @@ export const CreateUser = () => {
               <input
                 {...register("email", { required: "※入力は必須です" })}
                 className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
-                type="text"
+                type="email"
                 name="email"
+                autoComplete="email"
+                id="email"
               />
               <div className="text-red-500">
                 {errors.email && errors.email.message}
@@ -113,6 +118,8 @@ export const CreateUser = () => {
                 className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
                 type="password"
                 name="password"
+                autoComplete="new-password"
+                id="password"
               />
               <div className="text-red-500">
                 {errors.password && errors.password.message}
@@ -136,6 +143,8 @@ export const CreateUser = () => {
                 })}
                 className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
                 type="password"
+                autoComplete="new-password"
+                id="passwordConf"
               />
               <div className="text-red-500">
                 {errors.passwordConf && errors.passwordConf.message}

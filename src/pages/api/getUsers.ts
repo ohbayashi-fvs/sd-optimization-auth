@@ -1,6 +1,6 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { checkLogin } from "./auth/checkLogin";
+import checkLogin from "./auth/checkLogin";
 import { supabaseAccessUrl, supabaseServiceRoleKey } from "./lib/supabase";
 import { User } from "@/types/user/User";
 

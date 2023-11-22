@@ -3,27 +3,35 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Create } from "@/types/user/User";
 import { supabaseAccessUrl, supabaseServiceRoleKey } from "./lib/supabase";
+import checkLogin from "./auth/checkLogin";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const supabaseServerClient = createPagesServerClient<Create>(
-    {
-      req,
-      res,
-    },
-    {
-      supabaseUrl: supabaseAccessUrl,
-      supabaseKey: supabaseServiceRoleKey,
-    }
-  );
+  // session確認
+  const session = await checkLogin(req, res);
 
-  const userData = JSON.parse(req.body);
+  if (session) {
+    const supabaseServerClient = createPagesServerClient<Create>(
+      {
+        req,
+        res,
+      },
+      {
+        supabaseUrl: supabaseAccessUrl,
+        supabaseKey: supabaseServiceRoleKey,
+      }
+    );
 
-  const { data, error } = await supabaseServerClient.auth.admin.createUser({
-    app_metadata: { user_name: userData.user_name },
-    email: userData.email,
-    password: userData.password,
-  });
+    const userData = JSON.parse(req.body);
 
-  res.status(200).json(data ? data : error?.message);
+    await supabaseServerClient.auth.admin.createUser({
+      app_metadata: { user_name: userData.user_name },
+      email: userData.email,
+      email_confirm: true,
+      password: userData.password,
+    });
+    res.status(200).json({});
+  } else {
+    res.status(401).json({});
+  }
 };

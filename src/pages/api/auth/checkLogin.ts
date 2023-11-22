@@ -3,7 +3,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { supabaseAccessUrl, supabaseServiceRoleKey } from "../lib/supabase";
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export const checkLogin = async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function checkLogin(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const supabaseServerClient = createPagesServerClient(
     {
       req,
@@ -18,5 +21,7 @@ export const checkLogin = async (req: NextApiRequest, res: NextApiResponse) => {
     data: { session },
   } = await supabaseServerClient.auth.getSession();
 
+  // console.log(session);
+  // res.status(200).json({ status: session });
   return session !== null;
-};
+}
