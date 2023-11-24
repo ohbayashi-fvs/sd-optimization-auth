@@ -114,7 +114,12 @@ export const CreateUser = () => {
             <label className="mb-[2rem] text-[1.1rem]">パスワード</label>
             <div className="pl-[4.5rem]">
               <input
-                {...register("password", { required: "※入力は必須です" })}
+                {...register("password", {
+                  required: "※入力は必須です",
+                  validate: (value: string) => {
+                    return value.length >= 8 || "8文字以上で作成してください";
+                  },
+                })}
                 className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
                 type="password"
                 name="password"
