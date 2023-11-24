@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { supabaseAccessUrl, supabaseServiceRoleKey } from "../lib/supabase";
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default async function checkLogin(
+export default async function getLoggedInUserName(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -21,7 +21,8 @@ export default async function checkLogin(
     data: { session },
   } = await supabaseServerClient.auth.getSession();
 
-  // console.log(session);
-  // res.status(200).json({ status: session });
-  return session !== null;
+  res.status(200).json(session?.user.app_metadata.user_name);
+
+  //   console.log(session?.user.app_metadata.user_name);
+  //   return session?.user.app_metadata.user_name !== null;
 }

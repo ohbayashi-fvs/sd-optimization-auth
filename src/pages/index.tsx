@@ -9,23 +9,30 @@ export default function Home() {
   const [title, setTitle] = useState("信号電材ユーザー一覧");
   const [users, setUsers] = useState([]);
   const [isSession, setSession] = useState(false);
+  const [loggedInUserName, setLoggedInUserName] = useState("-");
 
   const router = useRouter();
   useEffect(() => {
-    const fetchUser = async () => {
+    const getUsersData = async () => {
       const res = await fetch("/api/getUsers", { method: "POST" });
       const usersData = await res.json();
 
       setUsers(usersData.users);
 
       if (res.status === 200) {
+        const res = await fetch("/api/auth/getLoggedInUserName", {
+          method: "POST",
+        });
+        const loggedInUserName = await res.json();
+        setLoggedInUserName(loggedInUserName);
+
         setSession(true);
       } else {
         router.push("/login");
       }
     };
-    fetchUser();
-  }, []);
+    getUsersData();
+  }, [router, router.isReady]);
 
   const ListView = () => {
     setTitle("信号電材ユーザー一覧");
@@ -56,7 +63,9 @@ export default function Home() {
                 <button onClick={CreateView}>新規作成</button>
               </span>
             </div>
-            <div className="w-1/3">ログイン中のユーザー：</div>
+            <div className="w-1/3">
+              ログイン中のユーザー：{loggedInUserName}
+            </div>
           </div>
           <hr />
           {/* 一覧表示 or 新規作成 */}

@@ -16,7 +16,7 @@ export default function EditUser() {
   const router = useRouter();
 
   useEffect(() => {
-    const getRowData = async () => {
+    const getUserData = async () => {
       const data = await fetch("/api/getUser", {
         method: "POST",
         body: JSON.stringify({
@@ -27,8 +27,8 @@ export default function EditUser() {
       setUser(data.users.user);
     };
 
-    getRowData();
-  }, [router.isReady]);
+    getUserData();
+  }, [router.isReady, router.query.id]);
 
   const onSubmit = async (val: Edit) => {
     await fetch("/api/editUser", {
@@ -70,9 +70,12 @@ export default function EditUser() {
           </label>
           <div className="pl-[5.7rem]">
             <input
-              {...register("email", { required: "※入力は必須です" })}
+              {...register("email", {
+                required: "※入力は必須です",
+              })}
               className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
               type="email"
+              autoComplete="email"
               defaultValue={user ? user.email : ""}
             />
             <div className="text-red-500">
@@ -84,10 +87,15 @@ export default function EditUser() {
           <label className="mb-[2rem] text-[1.1rem]">新しいパスワード</label>
           <div className="pl-[4.5rem]">
             <input
-              {...register("password", { required: "※入力は必須です" })}
+              {...register("password", {
+                required: "※入力は必須です",
+                validate: (value: string) => {
+                  return value.length >= 8 || "8文字以上で作成してください";
+                },
+              })}
               className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
               type="password"
-              defaultValue={""}
+              autoComplete="new-password"
             />
             <div className="text-red-500">
               {errors.password && errors.password.message}
@@ -103,14 +111,14 @@ export default function EditUser() {
               {...register("passwordConf", {
                 required: "※入力は必須です",
                 validate: (value) => {
-                  return (
-                    value === getValues("password") ||
-                    "メールアドレスが一致しません"
-                  );
+                  if (value !== getValues("password")) {
+                    return "メールアドレスが一致しません";
+                  }
                 },
               })}
               className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
               type="password"
+              autoComplete="new-password"
             />
             <div className="text-red-500">
               {errors.passwordConf && errors.passwordConf.message}

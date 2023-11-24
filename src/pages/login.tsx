@@ -20,8 +20,6 @@ export default function Login() {
       body: JSON.stringify({ email: val.email, password: val.password }),
     });
 
-    // console.log(res);
-
     if (res.status === 200) {
       router.push("/");
     }
@@ -52,7 +50,7 @@ export default function Login() {
             {...register("password", { required: true })}
             name="password"
             type="password"
-            autoComplete="new-password"
+            autoComplete="password"
             className="h-[1.5rem] rounded border-solid border-main p-2 text-[1.2rem]"
           />
           {errors.password && errors.password.message}
