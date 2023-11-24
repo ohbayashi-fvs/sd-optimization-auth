@@ -1,6 +1,7 @@
-import { useRouter } from "next/router";
+import type { Login } from "@/types/user/Auth";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Login } from "@/types/user/Auth";
+import { useRouter } from "next/router";
 
 export default function Login() {
   const {
@@ -11,9 +12,16 @@ export default function Login() {
 
   const router = useRouter();
 
-  // urlでログインに遷移時にもsessionの有無を確認して遷移させるか、ログアウトさせる。
+  useEffect(() => {
+    const checkSession = async () => {
+      const res = await fetch("/api/auth/getLoggedInUserName", {
+        method: "POST",
+      });
+      res.status === 200 && router.push("/");
+    };
+    checkSession();
+  }, [router, router.isReady]);
 
-  // ログイン
   const onSubmit = async (val: Login) => {
     const res = await fetch("/api/auth/login", {
       method: "POST",

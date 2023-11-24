@@ -1,7 +1,7 @@
-import { AppProps } from "next/app";
 import "../styles/globals.css";
-import { Header } from "@/components/header";
+import { AppProps } from "next/app";
 import { useRouter } from "next/router";
+import { Header } from "@/components/header";
 
 const noAuthRequired = ["/login"];
 

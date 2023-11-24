@@ -1,6 +1,6 @@
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { User } from "@/types/user/User";
+import type { User } from "@/types/user/User";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { supabaseAccessUrl, supabaseServiceRoleKey } from "./lib/supabase";
 import checkLogin from "./auth/session";
 
@@ -16,12 +16,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       supabaseKey: supabaseServiceRoleKey,
     }
   );
-
   const user = JSON.parse(req.body);
-
-  const { data, error } = await supabaseServerClient.auth.admin.getUserById(
-    user.id
-  );
+  const { data } = await supabaseServerClient.auth.admin.getUserById(user.id);
 
   // session確認
   const session = await checkLogin(req, res);

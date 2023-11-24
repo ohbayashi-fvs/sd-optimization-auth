@@ -1,17 +1,8 @@
-// import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
-// import type { MenuProps } from 'antd'
-// import { SdMenu } from './sdMenu'
-
-// import { UserMenu } from '~/features/user/components/userMenu'
 
 export const Header = () => {
-  // const onClick: MenuProps['onClick'] = (e) => {
-  //   const key = e.key as string
-  // }
-  //   const navigate = useNavigate();
   const router = useRouter();
 
   return (
@@ -27,7 +18,6 @@ export const Header = () => {
               className="pl-[12px]"
             />
           </Link>
-          {/* <SdMenu onClick={onClick} /> */}
         </div>
         <Link
           href={""}
@@ -41,9 +31,7 @@ export const Header = () => {
         >
           ログアウト
         </Link>
-        {/* <UserMenu /> */}
       </header>
-      {/* <Outlet /> */}
     </>
   );
 };

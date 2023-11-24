@@ -1,8 +1,8 @@
 import Head from "next/head";
-import { UserList } from "@/components/userList";
-import { CreateUser } from "@/components/createUser";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { UserList } from "@/components/userList";
+import { CreateUser } from "@/components/createUser";
 
 export default function Home() {
   const [isView, setIsView] = useState(0);
@@ -68,7 +68,6 @@ export default function Home() {
             </div>
           </div>
           <hr />
-          {/* 一覧表示 or 新規作成 */}
           {isSession ? (
             <>
               {isView === 0 ? (

@@ -1,4 +1,3 @@
-import { Database } from "@/types";
 import { createClient } from "@supabase/supabase-js";
 
 export const supabaseAccessUrl = process.env.NEXT_SUPABASE_URL || "";
@@ -23,10 +22,7 @@ export const supabaseAdmin = createClient(
 //   supabasePublicServiceRoleKey
 // );
 
-export const supabaseClient = createClient<Database>(
-  supabaseAccessUrl,
-  supabaseAnonKey
-);
+export const supabaseClient = createClient(supabaseAccessUrl, supabaseAnonKey);
 
 // export const supabasePublicClient = createClient<Database>(
 //   supabasePublicAccessUrl,

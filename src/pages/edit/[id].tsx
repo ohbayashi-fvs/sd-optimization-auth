@@ -1,7 +1,7 @@
-import { Edit, User } from "@/types/user/User";
-import { useRouter } from "next/router";
+import type { Edit, User } from "@/types/user/User";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 
 export default function EditUser() {
   const {

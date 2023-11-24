@@ -1,8 +1,8 @@
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
-import checkLogin from "./auth/session";
+import type { User } from "@/types/user/User";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { supabaseAccessUrl, supabaseServiceRoleKey } from "./lib/supabase";
-import { User } from "@/types/user/User";
+import checkLogin from "./auth/session";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async function getUsers(

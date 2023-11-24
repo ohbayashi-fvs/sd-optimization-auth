@@ -1,5 +1,5 @@
+import type { NextApiRequest, NextApiResponse } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
-import { NextApiRequest, NextApiResponse } from "next";
 import { supabaseAccessUrl, supabaseServiceRoleKey } from "../lib/supabase";
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -21,7 +21,5 @@ export default async function checkLogin(
     data: { session },
   } = await supabaseServerClient.auth.getSession();
 
-  // console.log(session?.user.app_metadata.user_name);
-  // res.status(200).json({ status: session });
   return session !== null;
 }

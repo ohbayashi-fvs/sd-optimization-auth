@@ -1,7 +1,6 @@
-// Creating a new supabase server client object (e.g. in API route):
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Logout } from "@/types/user/Auth";
+import type { Logout } from "@/types/user/Auth";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { supabaseAccessUrl, supabaseServiceRoleKey } from "../lib/supabase";
 
 // eslint-disable-next-line import/no-anonymous-default-export

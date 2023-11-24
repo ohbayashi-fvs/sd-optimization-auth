@@ -1,4 +1,4 @@
-import { Create } from "@/types/user/User";
+import type { Create } from "@/types/user/User";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
@@ -28,49 +28,6 @@ export const CreateUser = () => {
 
   return (
     <>
-      {/* <table className="mx-auto my-[100px] px-[10px]">
-        <thead className="bg-[#FAFAFA]">
-          <tr className="border-gray-100 border-t-0 border-x-0 border-solid">
-            <th className="min-w-[150px] h-[55px] pl-[16px] text-start text-[14px] font-medium border-gray-100 border-y-0 border-l-0 border-solid">
-              ユーザー名
-            </th>
-            <th className="min-w-[150px] h-[55px] pl-[16px] text-start text-[14px] font-medium border-gray-100 border-y-0 border-l-0 border-solid">
-              <div className="pl-[3.5rem]">
-                <input
-                  {...register("app_metadata.user_name", {
-                    required: "※入力は必須です",
-                  })}
-                  className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
-                  type="text"
-                />
-                <div className="text-red-500">
-                  {errors.app_metadata?.user_name &&
-                    errors.app_metadata?.user_name.message}
-                </div>
-              </div>
-            </th>
-          </tr>
-
-          <tr className="border-gray-100 border-t-0 border-x-0 border-solid">
-            <th className="min-w-[200px] h-[55px] pl-[16px] text-start text-[14px] font-medium">
-              ユーザーアドレス
-            </th>
-          </tr>
-
-          <tr className="border-gray-100 border-t-0 border-x-0 border-solid">
-            <th className="min-w-[350px] h-[55px] pl-[16px] text-start text-[14px] font-medium">
-              最終ログイン
-            </th>
-          </tr>
-
-          <tr className="border-gray-100 border-t-0 border-x-0 border-solid">
-            <th className="min-w-[150px] h-[55px] pl-[16px] text-start text-[14px] font-medium">
-              操作
-            </th>
-          </tr>
-        </thead>
-      </table> */}
-
       <div className="min-w-[30rem] py-[5rem] mb-[2rem] flex justify-center">
         <form onSubmit={handleSubmit(onSubmit)} className="bg-white">
           <div className="flex justify-start">

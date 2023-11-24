@@ -1,7 +1,6 @@
-// Creating a new supabase server client object (e.g. in API route):
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Login } from "@/types/user/Auth";
+import type { Login } from "@/types/user/Auth";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { supabaseAccessUrl, supabaseServiceRoleKey } from "../lib/supabase";
 import checkLogin from "./session";
 
@@ -18,7 +17,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
   );
   const loginData = JSON.parse(req.body);
-
   await supabaseServerClient.auth.signInWithPassword({
     email: loginData.email,
     password: loginData.password,
