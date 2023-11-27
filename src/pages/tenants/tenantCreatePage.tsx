@@ -1,9 +1,9 @@
 import type { CreateTenant } from "@/types/tenant/tenant";
-import { UsersHeader } from "@/features/users/components/usersHeader";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import { TenantHeader } from "@/features/tenants/components/tenantHeader";
 
-export default function CreateTenant() {
+export default function TenantCreatePage() {
   const {
     register,
     handleSubmit,
@@ -25,7 +25,7 @@ export default function CreateTenant() {
 
   return (
     <>
-      <UsersHeader />
+      <TenantHeader />
       <div className="min-w-[30rem] py-[5rem] mb-[2rem] flex justify-center">
         <form onSubmit={handleSubmit(onSubmit)} className="bg-white">
           <div className="flex justify-start">
@@ -49,7 +49,7 @@ export default function CreateTenant() {
           <div className="text-center">
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-[#153F8D] text-white rounded-none focus:outline-none"
             >
               追加する
             </button>

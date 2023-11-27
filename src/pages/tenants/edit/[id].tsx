@@ -12,7 +12,7 @@ export default function EditUserPage() {
 
   const router = useRouter();
 
-  const { data: tenantData } = useQuery({
+  const { data: tenantData, isLoading } = useQuery({
     queryKey: ["getTenant"],
     queryFn: async () => {
       const res = await fetch("/api/tenants/getTenant", {
@@ -30,6 +30,8 @@ export default function EditUserPage() {
     },
   });
 
+  console.log(isLoading, tenantData);
+
   const onSubmit = async (val: EditTenant) => {
     const res = await fetch("/api/tenants/editTenant", {
       method: "POST",
@@ -42,6 +44,9 @@ export default function EditUserPage() {
     res.status === 401 && router.push("/login");
   };
 
+  if (isLoading === true) {
+    return <></>;
+  }
   return (
     <div className="min-w-[30rem] py-[5rem] mb-[2rem] flex justify-center">
       <form onSubmit={handleSubmit(onSubmit)} className="bg-white">

@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { TenantsHeader } from "@/features/tenants/components/tenantsHeader";
+import { TenantHeader } from "@/features/tenants/components/tenantHeader";
 import { TenantList } from "@/features/tenants/components/tenantList";
 import { useQuery } from "@tanstack/react-query";
 
 export default function TenantHomePage() {
   const router = useRouter();
 
-  const { isLoading, data: tenants } = useQuery({
+  const { data: tenants } = useQuery({
     queryKey: ["getTenants"],
     queryFn: async () => {
       const res = await fetch("/api/tenants/getTenants", { method: "POST" });
@@ -23,7 +22,7 @@ export default function TenantHomePage() {
 
   return (
     <>
-      <TenantsHeader />
+      <TenantHeader />
       <TenantList tenants={tenants} />
     </>
   );

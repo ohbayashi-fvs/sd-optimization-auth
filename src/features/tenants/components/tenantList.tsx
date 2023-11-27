@@ -20,10 +20,10 @@ export const TenantList: FC<Props> = ({ tenants }) => {
         <table className="mx-auto my-[100px] px-[10px] border-collapse">
           <thead className="bg-[#FAFAFA]">
             <tr className="border-gray-100 border-t-0 border-x-0 border-solid">
-              <th className="min-w-[150px] h-[55px] pl-[16px] text-start text-[14px] font-medium border-gray-100 border-y-0 border-l-0 border-solid">
+              <th className="min-w-[15rem] h-[55px] pl-[1rem] text-start text-[14px] font-medium border-gray-100 border-y-0 border-l-0 border-solid">
                 テナント名
               </th>
-              <th className="min-w-[150px] h-[55px] pl-[16px] text-start text-[14px] font-medium">
+              <th className="min-w-[5rem] h-[55px] pl-[16px] text-start text-[14px] font-medium">
                 操作
               </th>
             </tr>
@@ -41,6 +41,7 @@ export const TenantList: FC<Props> = ({ tenants }) => {
                     onClick={async () => {
                       await onClickEditButton(tenant.id);
                     }}
+                    className="flex items-center justify-center mb-[0.75rem]"
                   >
                     <Image
                       src={"/images/edit_icon@2x.png"}
