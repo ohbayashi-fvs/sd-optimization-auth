@@ -39,7 +39,7 @@ export default function EditUserPage() {
         email: val.email,
         password: val.password,
       }),
-    }).then(() => router.push("/"));
+    }).then(() => router.push("/users"));
   };
 
   return (
