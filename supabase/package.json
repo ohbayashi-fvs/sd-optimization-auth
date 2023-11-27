@@ -9,7 +9,7 @@
     "reset": "npx supabase db reset",
     "dbml": "dbdocs build sd.dbml --project sd-optimization",
     "dbml:login": "npx dbdocs login",
-    "local:dump": "npx supabase db dump --db-url postgresql://postgres:postgres@localhost:54322/postgres -f supabase/backup/seeds/local_$(date +%Y%m%d_%H%M).sql --data-only",
+    "local:dump": "npx supabase db dump --db-url postgresql://postgres:postgres@127.0.0.1:54322/postgres -f supabase/backup/local_$(date +%Y%m%d_%H%M).sql --data-only",
     "staging:link": "npx supabase link --project-ref qdoqudftxecmfjhaowka --password HY2ITx96DSfOQpg0 --debug",
     "staging:push": "npx supabase db push --debug",
     "staging:reset": "npx supabase db reset --db-url postgresql://postgres:HY2ITx96DSfOQpg0@db.qdoqudftxecmfjhaowka.supabase.co/postgres",

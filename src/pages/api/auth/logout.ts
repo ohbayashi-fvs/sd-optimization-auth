@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { Logout } from "@/types/user/Auth";
+import type { Logout } from "@/types/auth";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { supabaseAccessUrl, supabaseServiceRoleKey } from "../lib/supabase";
 

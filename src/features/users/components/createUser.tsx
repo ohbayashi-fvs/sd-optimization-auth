@@ -1,4 +1,4 @@
-import type { Create } from "@/types/user/User";
+import type { Create } from "@/types/user/user";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 

@@ -1,7 +1,7 @@
-import { User } from "@/types/user/User";
+import type { User } from "@/types/user/user";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { FC, useState } from "react";
+import { FC } from "react";
 
 type Props = {
   users: User[];
@@ -11,8 +11,12 @@ export const UserList: FC<Props> = ({ users }) => {
   const route = useRouter();
 
   const onClickEditButton = async (id: string) => {
-    route.push(`/edit/${id}`);
+    route.push(`/users/edit/${id}`);
   };
+
+  if (!users) {
+    return <>Loading</>;
+  }
 
   return (
     <>
@@ -53,7 +57,6 @@ export const UserList: FC<Props> = ({ users }) => {
                   type="button"
                   onClick={async () => {
                     await onClickEditButton(user.id);
-                    // user.refetch();
                   }}
                 >
                   <Image

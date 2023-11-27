@@ -23,7 +23,7 @@ export const Header = () => {
           href={""}
           onClick={async (e) => {
             e.preventDefault();
-            await fetch("/api/auth/logout", {
+            await fetch("/api/users/auth/logout", {
               method: "POST",
             }).then((res) => router.push("/login"));
           }}

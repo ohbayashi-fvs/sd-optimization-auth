@@ -8,7 +8,7 @@ import {
 } from "react";
 import { Session } from "@supabase/supabase-js";
 import { useRouter } from "next/router";
-import createUser from "@/pages/api/createUser";
+import createUser from "@/pages/api/users/createUser";
 
 type AuthCtx = {
   session: Session | null;

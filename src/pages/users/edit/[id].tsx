@@ -1,9 +1,9 @@
-import type { Edit, User } from "@/types/user/User";
+import type { Edit, User } from "@/types/user/user";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 
-export default function EditUser() {
+export default function EditUserPage() {
   const {
     register,
     handleSubmit,
@@ -17,7 +17,7 @@ export default function EditUser() {
 
   useEffect(() => {
     const getUserData = async () => {
-      const data = await fetch("/api/getUser", {
+      const data = await fetch("/api/users/getUser", {
         method: "POST",
         body: JSON.stringify({
           id: router.query.id,
@@ -31,7 +31,7 @@ export default function EditUser() {
   }, [router.isReady, router.query.id]);
 
   const onSubmit = async (val: Edit) => {
-    await fetch("/api/editUser", {
+    await fetch("/api/users/editUser", {
       method: "POST",
       body: JSON.stringify({
         id: router.query.id,
@@ -129,7 +129,7 @@ export default function EditUser() {
           <button
             type="button"
             onClick={() => {
-              router.push("/");
+              router.push("/users");
             }}
             className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >

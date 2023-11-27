@@ -3,6 +3,10 @@ import { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { Header } from "@/components/header";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+
 const noAuthRequired = ["/login"];
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -13,8 +17,10 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       ) : (
         <div>
-          <Header />
-          <Component {...pageProps} />
+          <QueryClientProvider client={queryClient}>
+            <Header />
+            <Component {...pageProps} />
+          </QueryClientProvider>
         </div>
       )}
     </>

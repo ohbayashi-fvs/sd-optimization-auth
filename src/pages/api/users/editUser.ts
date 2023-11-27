@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { Edit } from "@/types/user/User";
+import type { Edit } from "@/types/user/user";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
-import { supabaseAccessUrl, supabaseServiceRoleKey } from "./lib/supabase";
-import checkLogin from "./auth/session";
+import { supabaseAccessUrl, supabaseServiceRoleKey } from "../lib/supabase";
+import checkLogin from "../auth/session";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {

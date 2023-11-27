@@ -1,9 +1,9 @@
-import type { Login } from "@/types/user/Auth";
+import type { Login } from "@/types/auth";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 
-export default function Login() {
+export default function LoginPage() {
   const {
     register,
     handleSubmit,
