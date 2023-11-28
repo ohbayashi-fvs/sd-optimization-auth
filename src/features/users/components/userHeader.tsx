@@ -15,21 +15,21 @@ export const UserHeader = () => {
       if (res.status === 200) {
         const loggedInUserName = await res.json();
         setLoggedInUserName(loggedInUserName);
-      } else {
-        router.push("/login");
       }
+      res.status === 401 && router.push("/auth/authLoginPage");
     };
     checkSession();
   }, [router, router.isReady]);
 
-  const pagePath = router.pathname;
+  const userPagePath = router.pathname;
+
   const selectPage =
-    "text-[#153F8D] underline underline-offset-[0.2rem] decoration-[#153F8D] border-none hover:text-[#008E92] hover:decoration-[#008E92] focus:outline-none";
+    "text-[1rem] text-[#153F8D] underline underline-offset-[0.2rem] decoration-[#153F8D] border-none hover:text-[#008E92] hover:decoration-[#008E92] focus:outline-none";
   const unSelectPage =
-    "bg-[#153F8D] text-white no-underline rounded-none p-[0.5rem] hover:text-white focus:outline-none";
+    "bg-[#153F8D] px-[1rem] text-[1rem] text-white no-underline rounded-sm p-[0.5rem] hover:text-white focus:outline-none";
 
   const setClassName = (flg: string) => {
-    if (pagePath === "/users") {
+    if (userPagePath === "/users") {
       if (flg === "allView") {
         return unSelectPage;
       }
@@ -37,7 +37,7 @@ export const UserHeader = () => {
         return selectPage;
       }
     }
-    if (pagePath === "/users/userCreatePage") {
+    if (userPagePath === "/users/userCreatePage") {
       if (flg === "allView") {
         return selectPage;
       }
@@ -47,31 +47,27 @@ export const UserHeader = () => {
     }
   };
 
-  const userPagePath = router.pathname;
-
-  console.log(userPagePath);
-
   return (
     <>
-      <div className="flex w-full items-center justify-between">
+      <div className="flex items-center justify-between h-[5rem] w-full">
         <div className="w-1/3">
           <h1 className="ml-[2rem] text-[1.5rem] font-normal">
             {userPagePath === "/users" && "ユーザー一覧"}
             {userPagePath === "/users/userCreatePage" && "ユーザー新規作成"}
           </h1>
         </div>
-        <div className="w-1/3 text-center text-[1.2rem]">
-          <span className="px-[20px]">
+        <div className="w-1/3 text-center">
+          <span className="px-[0.8rem]">
             <a href={"/users"} className={setClassName("allView")}>
               一覧表示
             </a>
           </span>
-          <span className="px-[20px]">
+          <span className="px-[0.8rem]">
             <a
               href={"/users/userCreatePage"}
               className={setClassName("newCreate")}
             >
-              新規作成
+              新規追加
             </a>
           </span>
         </div>
@@ -79,7 +75,7 @@ export const UserHeader = () => {
           ログイン中のユーザー：{loggedInUserName}
         </div>
       </div>
-      <div className="mx-[1.5rem] border-solid border-[0.1rem] border-[#B9C3CF]"></div>
+      <div className="mx-[1.5rem] border-solid border-[0.1rem] border-[#B9C3CF] border-t-0"></div>
     </>
   );
 };

@@ -12,11 +12,10 @@ export default function TenantHomePage() {
       const res = await fetch("/api/tenants/getTenants", { method: "POST" });
 
       if (res.status === 200) {
-        const data = await res.json();
-        return await data.tenants;
-      } else {
-        router.push("/login");
+        const resData = await res.json();
+        return await resData.tenants;
       }
+      res.status === 401 && router.push("/auth/authLoginPage");
     },
   });
 

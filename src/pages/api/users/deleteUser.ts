@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { CreateTenant } from "@/types/tenant/tenant";
+import type { UserEditType } from "@/types/user/crud";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { supabaseAccessUrl, supabaseServiceRoleKey } from "../lib/supabase";
 import checkLogin from "../auth/session";
@@ -10,7 +10,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await checkLogin(req, res);
 
   if (session) {
-    const supabaseServerClient = createPagesServerClient<CreateTenant>(
+    const supabaseServerClient = createPagesServerClient<UserEditType>(
       {
         req,
         res,
@@ -20,10 +20,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         supabaseKey: supabaseServiceRoleKey,
       }
     );
-    const Data = JSON.parse(req.body);
-    await supabaseServerClient
-      .from("tenants")
-      .insert({ tenant_name: Data.tenant_name });
+    const user = JSON.parse(req.body);
+    await supabaseServerClient.auth.admin.deleteUser(user.id, true);
 
     res.status(200).json({});
   } else {

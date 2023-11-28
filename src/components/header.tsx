@@ -11,11 +11,11 @@ export const Header = () => {
         <div className="flex items-center gap-10">
           <Link href="/" className="h-[23px]">
             <Image
-              src="/images/shingou_icon@2x.png"
+              src="/images/shingou_logo@2x.png"
               width={131}
               height={23}
               alt="信号電材様のアイコン"
-              className="pl-[12px]"
+              className="pl-[1rem]"
             />
           </Link>
         </div>
@@ -23,9 +23,9 @@ export const Header = () => {
           href={""}
           onClick={async (e) => {
             e.preventDefault();
-            await fetch("/api/users/auth/logout", {
+            await fetch("/api/auth/logout", {
               method: "POST",
-            }).then((res) => router.push("/login"));
+            }).then(() => router.push("/auth/authLoginPage"));
           }}
           className="text-white pr-[1rem] bg-header no-underline"
         >

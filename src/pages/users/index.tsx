@@ -10,11 +10,12 @@ export default function UserHomePage() {
   useEffect(() => {
     const getUsersData = async () => {
       const res = await fetch("/api/users/getUsers", { method: "POST" });
-      const usersData = await res.json();
 
-      setUsers(usersData.users);
-
-      res.status === 401 && router.push("/login");
+      if (res.status === 200) {
+        const resData = await res.json();
+        setUsers(resData.users);
+      }
+      res.status === 401 && router.push("/auth/authLoginPage");
     };
     getUsersData();
   }, [router, router.isReady]);

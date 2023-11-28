@@ -49,7 +49,7 @@ export const TenantHeader = () => {
       <div className="flex w-full items-center my-[0.5rem]">
         <div className="w-1/3">
           <h1 className="ml-[2rem] text-[1.5rem] font-normal">
-            信号電材テナント管理
+            信号電材組織管理
           </h1>
         </div>
         <div className="w-1/3 text-center text-[1.2rem]">
@@ -71,7 +71,7 @@ export const TenantHeader = () => {
           ログイン中のユーザー：{userName}
         </div>
       </div>
-      <hr />
+      <div className="mx-[1.5rem] border-solid border-[0.1rem] border-[#B9C3CF] border-t-0"></div>
     </>
   );
 };

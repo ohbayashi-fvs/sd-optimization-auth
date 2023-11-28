@@ -5,6 +5,7 @@ export type UserType = {
   };
   email: string;
   last_sign_in_at: string;
+  deleted_at: Date;
 };
 
 export type UserCreateType = {

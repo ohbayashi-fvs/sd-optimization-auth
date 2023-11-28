@@ -23,24 +23,24 @@ export default function UserCreatePage() {
       }),
     });
     res.status === 200 && router.push("/users");
-    res.status === 401 && router.push("/login");
+    res.status === 401 && router.push("/auth/authLoginPage");
   };
 
   return (
     <>
       <UserHeader />
-      <div className="min-w-[30rem] py-[5rem] mb-[2rem] flex justify-center">
-        <form onSubmit={handleSubmit(onSubmit)} className="bg-white">
-          <div className="flex justify-start">
-            <label className="mb-[2rem] mr-[1rem] text-[1.1rem]">
+      <div className="max-w-[50rem] mx-auto p-[5rem]">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white">
+          <div className="grid grid-cols-3 gap-[1.5rem]">
+            <label className="grid justify-end items-center text-[1rem]">
               ユーザー名
             </label>
-            <div className="pl-[3.5rem]">
+            <div className="grid justify-start items-center col-span-2">
               <input
                 {...register("app_metadata.user_name", {
                   required: "※入力は必須です",
                 })}
-                className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
+                className="h-[2.5rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20rem]"
                 type="text"
                 id="user_name"
               />
@@ -49,15 +49,14 @@ export default function UserCreatePage() {
                   errors.app_metadata?.user_name.message}
               </div>
             </div>
-          </div>
-          <div className="flex justify-start">
-            <label className="mb-[2rem] text-[1.1rem] min-w-[5rem]">
+
+            <label className="grid justify-end items-center pt-[1.5rem] text-[1rem]">
               メールアドレス
             </label>
-            <div className="pl-[2.5rem]">
+            <div className="grid justify-start items-center col-span-2 pt-[1.5rem]">
               <input
                 {...register("email", { required: "※入力は必須です" })}
-                className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
+                className="h-[2.5rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20rem]"
                 type="email"
                 name="email"
                 autoComplete="email"
@@ -67,10 +66,11 @@ export default function UserCreatePage() {
                 {errors.email && errors.email.message}
               </div>
             </div>
-          </div>
-          <div className="flex justify-start">
-            <label className="mb-[2rem] text-[1.1rem]">パスワード</label>
-            <div className="pl-[4.5rem]">
+
+            <label className="grid justify-end items-center pt-[1.5rem] text-[1rem]">
+              パスワード
+            </label>
+            <div className="grid justify-start items-center col-span-2 pt-[1.5rem]">
               <input
                 {...register("password", {
                   required: "※入力は必須です",
@@ -78,7 +78,7 @@ export default function UserCreatePage() {
                     return value.length >= 8 || "8文字以上で作成してください";
                   },
                 })}
-                className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
+                className="h-[2.5rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20rem]"
                 type="password"
                 name="password"
                 autoComplete="new-password"
@@ -88,12 +88,11 @@ export default function UserCreatePage() {
                 {errors.password && errors.password.message}
               </div>
             </div>
-          </div>
-          <div className="flex justify-start">
-            <label className="mb-[2rem] text-[1.1rem]">
+
+            <label className="grid justify-end items-center pt-[1.5rem] text-[1rem]">
               パスワード（確認）
             </label>
-            <div>
+            <div className="grid justify-start items-center col-span-2 pt-[1.5rem]">
               <input
                 {...register("passwordConf", {
                   required: "※入力は必須です",
@@ -104,7 +103,7 @@ export default function UserCreatePage() {
                     );
                   },
                 })}
-                className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
+                className="h-[2.5rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20rem]"
                 type="password"
                 autoComplete="new-password"
                 id="passwordConf"
@@ -114,7 +113,7 @@ export default function UserCreatePage() {
               </div>
             </div>
           </div>
-          <div className="text-center">
+          <div className="grid justify-center items-center mt-[5rem]">
             <button
               type="submit"
               className="bg-[#153F8D] text-white rounded-none focus:outline-none"

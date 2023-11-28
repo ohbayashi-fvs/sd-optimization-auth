@@ -20,7 +20,7 @@ export default function TenantCreatePage() {
       }),
     });
     res.status === 200 && router.push("/tenants");
-    res.status === 401 && router.push("/login");
+    res.status === 401 && router.push("/auth/authLoginPage");
   };
 
   return (
@@ -29,9 +29,7 @@ export default function TenantCreatePage() {
       <div className="min-w-[30rem] py-[5rem] mb-[2rem] flex justify-center">
         <form onSubmit={handleSubmit(onSubmit)} className="bg-white">
           <div className="flex justify-start">
-            <label className="mb-[2rem] mr-[1rem] text-[1.1rem]">
-              テナント名
-            </label>
+            <label className="mb-[2rem] mr-[1rem] text-[1.1rem]">組織名</label>
             <div className="pl-[3.5rem]">
               <input
                 {...register("tenant_name", {

@@ -26,11 +26,9 @@ export default function EditUserPage() {
         const resData = await res.json();
         return await resData.tenant[0].tenant_name;
       }
-      res.status === 401 && router.push("/login");
+      res.status === 401 && router.push("/auth/authLoginPage");
     },
   });
-
-  console.log(isLoading, tenantData);
 
   const onSubmit = async (val: EditTenant) => {
     const res = await fetch("/api/tenants/editTenant", {
@@ -41,19 +39,18 @@ export default function EditUserPage() {
       }),
     });
     res.status === 200 && router.push("/tenants");
-    res.status === 401 && router.push("/login");
+    res.status === 401 && router.push("/auth/authLoginPage");
   };
 
   if (isLoading === true) {
     return <></>;
   }
+
   return (
     <div className="min-w-[30rem] py-[5rem] mb-[2rem] flex justify-center">
       <form onSubmit={handleSubmit(onSubmit)} className="bg-white">
         <div className="flex justify-start">
-          <label className="mb-[2rem] mr-[1rem] text-[1.1rem]">
-            テナント名
-          </label>
+          <label className="mb-[2rem] mr-[1rem] text-[1.1rem]">組織名</label>
           <div className="pl-[6.8rem]">
             <input
               {...register("tenant_name", {
