@@ -1,19 +1,19 @@
-import { UsersHeader } from "@/features/users/components/usersHeader";
-import type { Create } from "@/types/user/user";
+import type { UserCreateType } from "@/types/user/crud";
+import { UserHeader } from "@/features/users/components/userHeader";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
-export default function CreateUser() {
+export default function UserCreatePage() {
   const {
     register,
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<Create>();
+  } = useForm<UserCreateType>();
 
   const router = useRouter();
 
-  const onSubmit = async (val: Create) => {
+  const onSubmit = async (val: UserCreateType) => {
     const res = await fetch("/api/users/createUser", {
       method: "POST",
       body: JSON.stringify({
@@ -28,7 +28,7 @@ export default function CreateUser() {
 
   return (
     <>
-      <UsersHeader />
+      <UserHeader />
       <div className="min-w-[30rem] py-[5rem] mb-[2rem] flex justify-center">
         <form onSubmit={handleSubmit(onSubmit)} className="bg-white">
           <div className="flex justify-start">
@@ -117,7 +117,7 @@ export default function CreateUser() {
           <div className="text-center">
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-[#153F8D] text-white rounded-none focus:outline-none"
             >
               追加する
             </button>

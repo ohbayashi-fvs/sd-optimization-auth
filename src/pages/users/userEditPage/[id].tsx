@@ -1,17 +1,17 @@
-import type { Edit, User } from "@/types/user/user";
+import type { UserEditType, UserType } from "@/types/user/crud";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 
-export default function EditUserPage() {
+export default function UserEditPage() {
   const {
     register,
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<Edit>();
+  } = useForm<UserEditType>();
 
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<UserType>();
 
   const router = useRouter();
 
@@ -30,7 +30,7 @@ export default function EditUserPage() {
     getUserData();
   }, [router.isReady, router.query.id]);
 
-  const onSubmit = async (val: Edit) => {
+  const onSubmit = async (val: UserEditType) => {
     await fetch("/api/users/editUser", {
       method: "POST",
       body: JSON.stringify({
@@ -131,13 +131,13 @@ export default function EditUserPage() {
             onClick={() => {
               router.push("/users");
             }}
-            className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="text-[#153F8D] underline underline-offset-[0.2rem] decoration-[#153F8D] border-none hover:text-[#008E92] hover:decoration-[#008E92] focus:outline-none"
           >
             一覧に戻る
           </button>
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-[#153F8D] text-white rounded-none focus:outline-none"
           >
             保存する
           </button>

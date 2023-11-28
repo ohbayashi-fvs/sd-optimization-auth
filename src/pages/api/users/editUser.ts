@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { Edit } from "@/types/user/user";
+import type { UserEditType } from "@/types/user/crud";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { supabaseAccessUrl, supabaseServiceRoleKey } from "../lib/supabase";
 import checkLogin from "../auth/session";
@@ -10,7 +10,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await checkLogin(req, res);
 
   if (session) {
-    const supabaseServerClient = createPagesServerClient<Edit>(
+    const supabaseServerClient = createPagesServerClient<UserEditType>(
       {
         req,
         res,

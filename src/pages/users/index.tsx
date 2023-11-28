@@ -1,8 +1,7 @@
-import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { UserList } from "@/features/users/components/userList";
-import { UsersHeader } from "@/features/users/components/usersHeader";
+import { UserHeader } from "@/features/users/components/userHeader";
 
 export default function UserHomePage() {
   const [users, setUsers] = useState([]);
@@ -22,7 +21,7 @@ export default function UserHomePage() {
 
   return (
     <>
-      <UsersHeader />
+      <UserHeader />
       <UserList users={users} />
     </>
   );

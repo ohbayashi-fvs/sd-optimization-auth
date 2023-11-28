@@ -1,4 +1,4 @@
-export type User = {
+export type UserType = {
   id: string;
   app_metadata: {
     user_name: string;
@@ -7,7 +7,7 @@ export type User = {
   last_sign_in_at: string;
 };
 
-export type Create = {
+export type UserCreateType = {
   app_metadata: {
     user_name: string;
   };
@@ -16,7 +16,7 @@ export type Create = {
   passwordConf: string;
 };
 
-export type Edit = {
+export type UserEditType = {
   app_metadata: {
     user_name: string;
   };
