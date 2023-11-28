@@ -26,16 +26,18 @@ export default function TenantCreatePage() {
   return (
     <>
       <TenantHeader />
-      <div className="min-w-[30rem] py-[5rem] mb-[2rem] flex justify-center">
-        <form onSubmit={handleSubmit(onSubmit)} className="bg-white">
-          <div className="flex justify-start">
-            <label className="mb-[2rem] mr-[1rem] text-[1.1rem]">組織名</label>
-            <div className="pl-[3.5rem]">
+      <div className="max-w-[50rem] mx-auto p-[4.5rem]">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white">
+          <div className="grid grid-cols-3 gap-[1.5rem]">
+            <label className="grid justify-end items-center text-[1rem]">
+              組織名
+            </label>
+            <div className="grid justify-start items-center col-span-2">
               <input
                 {...register("tenant_name", {
                   required: "※入力は必須です",
                 })}
-                className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
+                className="h-[2.5rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20rem]"
                 type="text"
                 id="tenant_name"
               />
@@ -44,7 +46,7 @@ export default function TenantCreatePage() {
               </div>
             </div>
           </div>
-          <div className="text-center">
+          <div className="grid justify-center items-center mt-[3rem]">
             <button
               type="submit"
               className="bg-[#153F8D] text-white rounded-none focus:outline-none"

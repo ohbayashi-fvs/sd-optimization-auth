@@ -16,7 +16,7 @@ export const TenantList: FC<Props> = ({ tenants }) => {
   return (
     <>
       {tenants ? (
-        <table className="mx-auto my-[100px] px-[10px] border-collapse">
+        <table className="max-w-[53rem] mx-auto my-[4.5rem] border-collapse">
           <thead className="bg-[#FAFAFA]">
             <tr className="flex h-[3.5rem] border-solid border-[0.1rem] border-black border-opacity-[6%] border-t-0 border-x-0">
               <th className="flex items-center min-w-[10rem] pl-[1rem] mr-[1rem] text-start text-[1rem] font-medium">

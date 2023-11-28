@@ -30,6 +30,15 @@ export default function EditUserPage() {
     },
   });
 
+  const onClickDeleteButton = async () => {
+    const res = await fetch("/api/tenants/deleteTenant", {
+      method: "POST",
+      body: JSON.stringify({ id: router.query.id }),
+    });
+    res.status === 200 && router.push("/tenants");
+    res.status === 401 && router.push("/auth/authLoginPage");
+  };
+
   const onSubmit = async (val: EditTenant) => {
     const res = await fetch("/api/tenants/editTenant", {
       method: "POST",
@@ -47,16 +56,18 @@ export default function EditUserPage() {
   }
 
   return (
-    <div className="min-w-[30rem] py-[5rem] mb-[2rem] flex justify-center">
-      <form onSubmit={handleSubmit(onSubmit)} className="bg-white">
-        <div className="flex justify-start">
-          <label className="mb-[2rem] mr-[1rem] text-[1.1rem]">組織名</label>
-          <div className="pl-[6.8rem]">
+    <div className="max-w-[50rem] mx-auto p-[5rem]">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white">
+        <div className="grid grid-cols-3 gap-[1.5rem]">
+          <label className="grid justify-end items-center text-[1rem]">
+            組織名
+          </label>
+          <div className="grid justify-start items-center col-span-2">
             <input
               {...register("tenant_name", {
                 required: "※入力は必須です",
               })}
-              className="h-[2.5rem] rounded-sm border-[1.5px] border-main text-[1.2rem] min-w-[30rem]"
+              className="h-[2.5rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20rem]"
               type="text"
               defaultValue={tenantData ? tenantData : ""}
             />
@@ -65,22 +76,35 @@ export default function EditUserPage() {
             </div>
           </div>
         </div>
-        <div className="flex justify-between">
-          <button
-            type="button"
-            onClick={() => {
-              router.push("/tenants");
-            }}
-            className="text-[#153F8D] underline underline-offset-[0.2rem] decoration-[#153F8D] border-none hover:text-[#008E92] hover:decoration-[#008E92] focus:outline-none"
-          >
-            一覧に戻る
-          </button>
-          <button
-            type="submit"
-            className="bg-[#153F8D] text-white rounded-none focus:outline-none"
-          >
-            保存する
-          </button>
+        <div className="grid grid-cols-2 pt-[5rem]">
+          <div className="grid justify-center">
+            <button
+              type="button"
+              onClick={() => {
+                router.push("/tenants");
+              }}
+              className="mx-[1rem] text-[#153F8D] underline underline-offset-[0.2rem] decoration-[#153F8D] border-none hover:text-[#008E92] hover:decoration-[#008E92] focus:outline-none"
+            >
+              一覧に戻る
+            </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              onClick={() => {
+                onClickDeleteButton();
+              }}
+              className="mx-[1rem] bg-[#FFB800] text-white rounded-none focus:outline-none"
+            >
+              削除する
+            </button>
+            <button
+              type="submit"
+              className="mx-[1rem] bg-[#153F8D] text-white rounded-none focus:outline-none"
+            >
+              保存する
+            </button>
+          </div>
         </div>
       </form>
     </div>
