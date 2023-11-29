@@ -44,7 +44,9 @@ export default function EditUserPage() {
 
       if (res.status === 200) {
         const resData = await res.json();
-        setTenant(resData.tenant[0].tenant_name);
+        if (resData.tenant) {
+          setTenant(resData.tenant[0].tenant_name);
+        }
       }
       res.status === 401 && router.push("/auth/authLoginPage");
     };
