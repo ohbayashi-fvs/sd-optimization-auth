@@ -29,7 +29,7 @@ export default function UserCreatePage() {
   return (
     <>
       <UserHeader />
-      <div className="max-w-[50rem] mx-auto p-[5rem]">
+      <div className="max-w-[50rem] mx-auto p-[4.5rem]">
         <form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white">
           <div className="grid grid-cols-3 gap-[1.5rem]">
             <label className="grid justify-end items-center text-[1rem]">
@@ -113,7 +113,7 @@ export default function UserCreatePage() {
               </div>
             </div>
           </div>
-          <div className="grid justify-center items-center mt-[5rem]">
+          <div className="grid justify-center items-center mt-[3rem]">
             <button
               type="submit"
               className="bg-[#153F8D] text-white rounded-none focus:outline-none"

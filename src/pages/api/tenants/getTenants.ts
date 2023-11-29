@@ -19,7 +19,10 @@ export default async function getTenants(
       supabaseKey: supabaseServiceRoleKey,
     }
   );
-  const { data } = await supabaseServerClient.from("tenants").select();
+  const { data } = await supabaseServerClient
+    .from("tenants")
+    .select()
+    .order("created_at");
 
   // session確認
   const session = await checkLogin(req, res);

@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 
-const noAuthRequired = ["/login"];
+const noAuthRequired = ["/auth/authLoginPage"];
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();

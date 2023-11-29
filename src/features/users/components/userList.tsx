@@ -27,7 +27,7 @@ export const UserList: FC<Props> = ({ users }) => {
   return (
     <>
       <div className="max-w-[53rem] mx-auto my-[4.5rem]">
-        <div className="flex justify-end items-end gap-[0.5rem]">
+        {/* <div className="flex justify-end items-end gap-[0.5rem]">
           <span className="border-none text-main underline underline-offset-[3px] !outline-none selection:border-none">
             {deletedOnly ? "有効な製品のみ表示" : "無効な製品のみ表示"}
           </span>
@@ -40,7 +40,7 @@ export const UserList: FC<Props> = ({ users }) => {
             />
             <div className="h-[1.4rem] w-[2.8rem] rounded-full bg-gray-200 after:absolute after:left-[0.1rem] after:top-[0.05rem] after:h-[1.3rem] after:w-[1.3rem] after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-main peer-checked:after:translate-x-full peer-checked:after:border-white" />
           </label>
-        </div>
+        </div> */}
         <table className="px-[1rem] mt-[1rem] border-collapse">
           <thead className="bg-[#FAFAFA]">
             <tr className="flex h-[3.5rem] border-solid border-[0.1rem] border-black border-opacity-[6%] border-t-0 border-x-0">

@@ -50,13 +50,13 @@ export const UserHeader = () => {
   return (
     <>
       <div className="flex items-center justify-between h-[5rem] w-full">
-        <div className="w-1/3">
-          <h1 className="ml-[2rem] text-[1.5rem] font-normal">
+        <div className="w-1/4 text-center">
+          <h1 className="text-[1.5rem] font-normal">
             {userPagePath === "/users" && "ユーザー一覧"}
             {userPagePath === "/users/userCreatePage" && "ユーザー新規作成"}
           </h1>
         </div>
-        <div className="w-1/3 text-center">
+        <div className="w-1/2 text-center">
           <span className="px-[0.8rem]">
             <a href={"/users"} className={setClassName("allView")}>
               一覧表示
@@ -71,7 +71,7 @@ export const UserHeader = () => {
             </a>
           </span>
         </div>
-        <div className="w-1/3 text-right pr-[2rem]">
+        <div className="w-1/4 text-start">
           ログイン中のユーザー：{loggedInUserName}
         </div>
       </div>
