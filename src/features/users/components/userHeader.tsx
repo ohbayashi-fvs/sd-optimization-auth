@@ -53,7 +53,7 @@ export const UserHeader = () => {
         <div className="w-1/4 text-center">
           <h1 className="text-[1.5rem] font-normal">
             {userPagePath === "/users" && "ユーザー一覧"}
-            {userPagePath === "/users/userCreatePage" && "ユーザー新規作成"}
+            {userPagePath === "/users/userCreatePage" && "ユーザー追加"}
           </h1>
         </div>
         <div className="w-1/2 text-center">

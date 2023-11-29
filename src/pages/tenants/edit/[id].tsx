@@ -2,6 +2,7 @@ import type { EditTenant } from "@/types/tenant/tenant";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 export default function EditUserPage() {
   const {
@@ -10,11 +11,30 @@ export default function EditUserPage() {
     formState: { errors },
   } = useForm<EditTenant>();
 
+  const [tenantName, setTenant] = useState();
+
   const router = useRouter();
 
-  const { data: tenantData, isLoading } = useQuery({
-    queryKey: ["getTenant"],
-    queryFn: async () => {
+  // const { data: tenantData, isLoading } = useQuery({
+  //   queryKey: ["getTenant"],
+  //   queryFn: async () => {
+  //     const res = await fetch("/api/tenants/getTenant", {
+  //       method: "POST",
+  //       body: JSON.stringify({
+  //         id: router.query.id,
+  //       }),
+  //     });
+
+  //     if (res.status === 200) {
+  //       const resData = await res.json();
+  //       return await resData.tenant[0].tenant_name;
+  //     }
+  //     res.status === 401 && router.push("/auth/authLoginPage");
+  //   },
+  // });
+
+  useEffect(() => {
+    const getTenantData = async () => {
       const res = await fetch("/api/tenants/getTenant", {
         method: "POST",
         body: JSON.stringify({
@@ -24,11 +44,13 @@ export default function EditUserPage() {
 
       if (res.status === 200) {
         const resData = await res.json();
-        return await resData.tenant[0].tenant_name;
+        setTenant(resData.tenant[0].tenant_name);
       }
       res.status === 401 && router.push("/auth/authLoginPage");
-    },
-  });
+    };
+
+    getTenantData();
+  }, [router]);
 
   const onClickDeleteButton = async () => {
     const res = await fetch("/api/tenants/deleteTenant", {
@@ -51,10 +73,6 @@ export default function EditUserPage() {
     res.status === 401 && router.push("/auth/authLoginPage");
   };
 
-  if (isLoading === true) {
-    return <></>;
-  }
-
   return (
     <div className="max-w-[50rem] mx-auto p-[5rem]">
       <form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white">
@@ -69,7 +87,7 @@ export default function EditUserPage() {
               })}
               className="h-[2.5rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20rem]"
               type="text"
-              defaultValue={tenantData ? tenantData : ""}
+              defaultValue={tenantName ? tenantName : ""}
             />
             <div className="text-red-500">
               {errors.tenant_name && errors.tenant_name.message}
