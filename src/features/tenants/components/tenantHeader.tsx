@@ -46,7 +46,7 @@ export const TenantHeader = () => {
 
   return (
     <>
-      <div className="flex w-full items-center my-[0.5rem]">
+      <div className="flex items-center justify-between h-[5rem] w-full">
         <div className="w-1/4 text-center">
           <h1 className="text-[1.5rem] font-normal">
             {tenantPagePath === "/tenants" && "組織一覧"}

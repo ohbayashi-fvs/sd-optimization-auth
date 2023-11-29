@@ -1,8 +1,11 @@
 export default function HomePage() {
   return (
     <>
-      <div className="w-1/3">
-        <h1 className="ml-[2rem] text-[1.5rem] font-normal">ホーム</h1>
+      <div className="flex items-center justify-between h-[5rem] w-full">
+        <div className="w-1/4 text-center">
+          <h1 className="text-[1.5rem] font-normal">ホーム</h1>
+        </div>
+        <div></div>
       </div>
       <div className="mx-[1.5rem] border-solid border-[0.1rem] border-t-0 border-[#B9C3CF]"></div>
 
