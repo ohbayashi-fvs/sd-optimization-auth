@@ -1,12 +1,14 @@
+import { ColumnsType } from "@/types/user/columns";
 import type { UserType } from "@/types/user/crud";
 import { useRouter } from "next/router";
 import { FC } from "react";
 
 type Props = {
+  columnName: ColumnsType[];
   users: UserType[];
 };
 
-export const UserList: FC<Props> = ({ users }) => {
+export const UserList: FC<Props> = ({ columnName, users }) => {
   const route = useRouter();
 
   let deletedOnly = true;
@@ -17,11 +19,11 @@ export const UserList: FC<Props> = ({ users }) => {
 
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     deletedOnly = ev.target.checked;
-    console.log(ev.target.checked);
+    // console.log(ev.target.checked);
   };
 
   if (!users) {
-    return <></>;
+    return <>Loading...</>;
   }
 
   return (
@@ -44,15 +46,14 @@ export const UserList: FC<Props> = ({ users }) => {
         <table className="px-[1rem] mt-[1rem] border-collapse">
           <thead className="bg-[#FAFAFA]">
             <tr className="flex h-[3.5rem] border-solid border-[0.1rem] border-black border-opacity-[6%] border-t-0 border-x-0">
-              <th className="flex items-center min-w-[15rem] pl-[1rem] text-start text-[1rem] font-medium">
-                ユーザー名
-              </th>
-              <th className="flex items-center mr-[1rem] min-w-[15rem] text-start text-[1rem] font-medium before:content-[''] before:inline-block before:mr-[1rem] before:border-solid before:border-[0.1rem] before:border-y-0 before:border-r-0 before:border-black before:border-opacity-[6%] before: before:h-[1.4rem]">
-                ユーザーアドレス
-              </th>
-              <th className="flex items-center mr-[1rem] min-w-[15rem] text-start text-[1rem] font-medium before:content-[''] before:inline-block before:mr-[1rem] before:border-solid before:border-[0.1rem] before:border-y-0 before:border-r-0 before:border-black before:border-opacity-[6%] before: before:h-[1.4rem]">
-                最終ログイン
-              </th>
+              {columnName.map((columnName: ColumnsType, index) => (
+                <th
+                  key={index}
+                  className="flex items-center min-w-[15rem] pl-[1rem] text-start text-[1rem] font-medium"
+                >
+                  <span>{columnName.title}</span>
+                </th>
+              ))}
               <th className="flex items-center mr-[1rem] min-w-[5rem] text-start text-[1rem] font-medium before:content-[''] before:mr-[1rem] before:border-solid before:border-[0.1rem] before:border-y-0 before:border-r-0 before:border-black before:border-opacity-[6%] before: before:h-[1.4rem] before:inline-block">
                 操作
               </th>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { UserList } from "@/features/users/components/userList";
 import { UserHeader } from "@/features/users/components/userHeader";
+import { ColumnsType } from "@/types/user/columns";
 
 export default function UserHomePage() {
   const [users, setUsers] = useState([]);
@@ -20,10 +21,16 @@ export default function UserHomePage() {
     getUsersData();
   }, [router, router.isReady]);
 
+  const columnName: ColumnsType[] = [
+    { title: "ユーザー名" },
+    { title: "ユーザーアドレス" },
+    { title: "最終ログイン" },
+  ];
+
   return (
     <>
       <UserHeader />
-      <UserList users={users} />
+      <UserList columnName={columnName} users={users} />
     </>
   );
 }
