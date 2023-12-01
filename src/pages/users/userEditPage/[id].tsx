@@ -1,7 +1,7 @@
-import type { UserEditType, UserType } from "@/types/user/crud";
-import { useEffect, useState } from "react";
+import type { UserEditType } from "@/types/user/crud";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import { useQuery } from "@tanstack/react-query";
 
 export default function UserEditPage() {
   const {
@@ -11,28 +11,27 @@ export default function UserEditPage() {
     formState: { errors },
   } = useForm<UserEditType>();
 
-  const [user, setUser] = useState<UserType>();
-
   const router = useRouter();
 
-  useEffect(() => {
-    const getUserData = async () => {
+  const userId = router.query.id;
+
+  const { data: user } = useQuery({
+    queryKey: [userId],
+    queryFn: async () => {
       const res = await fetch("/api/users/getUser", {
         method: "POST",
         body: JSON.stringify({
-          id: router.query.id,
+          id: userId,
         }),
       });
 
       if (res.status === 200) {
         const resData = await res.json();
-        setUser(resData.users.user);
+        return await resData.users.user;
       }
       res.status === 401 && router.push("/auth/authLoginPage");
-    };
-
-    getUserData();
-  }, [router, router.isReady, router.query.id]);
+    },
+  });
 
   const onClickDeleteButton = async () => {
     const res = await fetch("/api/users/deleteUser", {

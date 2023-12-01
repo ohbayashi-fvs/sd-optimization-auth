@@ -1,47 +1,44 @@
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
 export const UserHeader = () => {
-  const [loggedInUserName, setLoggedInUserName] = useState("-");
-
   const router = useRouter();
 
-  useEffect(() => {
-    const checkSession = async () => {
+  const userPagePath = router.pathname;
+
+  const { data: loggedInUserName } = useQuery({
+    queryKey: ["getLoggedInUserName"],
+    queryFn: async () => {
       const res = await fetch("/api/auth/getLoggedInUserName", {
         method: "POST",
       });
 
       if (res.status === 200) {
-        const loggedInUserName = await res.json();
-        setLoggedInUserName(loggedInUserName);
+        return await res.json();
       }
       res.status === 401 && router.push("/auth/authLoginPage");
-    };
-    checkSession();
-  }, [router, router.isReady]);
-
-  const userPagePath = router.pathname;
+    },
+  });
 
   const selectPage =
     "text-[1rem] text-[#153F8D] underline underline-offset-[0.2rem] decoration-[#153F8D] border-none hover:text-[#008E92] hover:decoration-[#008E92] focus:outline-none";
   const unSelectPage =
     "bg-[#153F8D] px-[1rem] text-[1rem] text-white no-underline rounded-sm p-[0.5rem] hover:text-white focus:outline-none";
 
-  const setClassName = (flg: string) => {
+  const setClassName = (selectButton: string) => {
     if (userPagePath === "/users") {
-      if (flg === "allView") {
+      if (selectButton === "allView") {
         return unSelectPage;
       }
-      if (flg === "newCreate") {
+      if (selectButton === "newCreate") {
         return selectPage;
       }
     }
     if (userPagePath === "/users/userCreatePage") {
-      if (flg === "allView") {
+      if (selectButton === "allView") {
         return selectPage;
       }
-      if (flg === "newCreate") {
+      if (selectButton === "newCreate") {
         return unSelectPage;
       }
     }

@@ -2,6 +2,7 @@ import type { Login } from "@/types/auth";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import { useQuery } from "@tanstack/react-query";
 
 export default function LoginPage() {
   const {
@@ -12,17 +13,17 @@ export default function LoginPage() {
 
   const router = useRouter();
 
-  useEffect(() => {
-    const checkSession = async () => {
+  useQuery({
+    queryKey: ["getLoggedInUserName"],
+    queryFn: async () => {
       const res = await fetch("/api/auth/getLoggedInUserName", {
         method: "POST",
       });
       res.status === 200 && router.push("/");
-    };
-    checkSession();
-  }, [router, router.isReady]);
+    },
+  });
 
-  const onSubmit = async (val: Login) => {
+  const onSubmitLoginButton = async (val: Login) => {
     const res = await fetch("/api/auth/login", {
       method: "POST",
       body: JSON.stringify({ email: val.email, password: val.password }),
@@ -37,7 +38,7 @@ export default function LoginPage() {
     <div>
       <section className="m-[30vh] flex items-center justify-center">
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmitLoginButton)}
           className="flex w-[20rem] flex-col gap-2 text-[1.2rem]"
         >
           <label className="block text-gray-700 text-sm font-bold mb-2">
