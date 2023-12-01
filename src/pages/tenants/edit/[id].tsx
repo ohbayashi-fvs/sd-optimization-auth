@@ -2,7 +2,6 @@ import type { EditTenant } from "@/types/tenant/tenant";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 
 export default function EditUserPage() {
   const {
@@ -11,48 +10,27 @@ export default function EditUserPage() {
     formState: { errors },
   } = useForm<EditTenant>();
 
-  const [tenantName, setTenant] = useState();
-
   const router = useRouter();
 
-  // const { data: tenantData, isLoading } = useQuery({
-  //   queryKey: ["getTenant"],
-  //   queryFn: async () => {
-  //     const res = await fetch("/api/tenants/getTenant", {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         id: router.query.id,
-  //       }),
-  //     });
+  const tenantId = router.query.id;
 
-  //     if (res.status === 200) {
-  //       const resData = await res.json();
-  //       return await resData.tenant[0].tenant_name;
-  //     }
-  //     res.status === 401 && router.push("/auth/authLoginPage");
-  //   },
-  // });
-
-  useEffect(() => {
-    const getTenantData = async () => {
+  const { data: tenant } = useQuery({
+    queryKey: [tenantId],
+    queryFn: async () => {
       const res = await fetch("/api/tenants/getTenant", {
         method: "POST",
         body: JSON.stringify({
-          id: router.query.id,
+          id: tenantId,
         }),
       });
 
       if (res.status === 200) {
         const resData = await res.json();
-        if (resData.tenant) {
-          setTenant(resData.tenant[0].tenant_name);
-        }
+        return await resData.tenant[0].tenant_name;
       }
       res.status === 401 && router.push("/auth/authLoginPage");
-    };
-
-    getTenantData();
-  }, [router]);
+    },
+  });
 
   const onClickDeleteButton = async () => {
     const res = await fetch("/api/tenants/deleteTenant", {
@@ -89,7 +67,7 @@ export default function EditUserPage() {
               })}
               className="h-[2.5rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20rem]"
               type="text"
-              defaultValue={tenantName ? tenantName : ""}
+              defaultValue={tenant ? tenant : ""}
             />
             <div className="text-red-500">
               {errors.tenant_name && errors.tenant_name.message}

@@ -1,5 +1,4 @@
 import type { Login } from "@/types/auth";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
