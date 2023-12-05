@@ -29,7 +29,6 @@ export default async function getUsers(
   const joinedData = profilesData?.map((profile) => {
     const user = usersData.users.find((user) => {
       user.id === profile.user_id;
-      console.log(user);
     });
     const date =
       user?.last_sign_in_at && new Date(user?.last_sign_in_at as string);
