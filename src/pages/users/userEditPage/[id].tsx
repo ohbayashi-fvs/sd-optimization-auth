@@ -1,4 +1,4 @@
-import type { UserEditType } from "@/types/user/crud";
+import type { UserEditType } from "@/types/type";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";

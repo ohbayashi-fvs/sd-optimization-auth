@@ -13,16 +13,16 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   return (
     <>
-      {noAuthRequired.includes(router.pathname) ? (
-        <Component {...pageProps} />
-      ) : (
-        <div>
-          <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        {noAuthRequired.includes(router.pathname) ? (
+          <Component {...pageProps} />
+        ) : (
+          <div>
             <Header />
             <Component {...pageProps} />
-          </QueryClientProvider>
-        </div>
-      )}
+          </div>
+        )}
+      </QueryClientProvider>
     </>
   );
 }

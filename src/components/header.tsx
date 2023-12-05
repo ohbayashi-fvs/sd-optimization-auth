@@ -10,12 +10,11 @@ export const Header = () => {
       <header className="flex h-[54px] w-full items-center justify-between bg-header">
         <div className="flex items-center gap-10">
           <Link href="/" className="h-[23px]">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src="/images/shingou_logo@2x.png"
-              width={131}
-              height={23}
               alt="信号電材様のアイコン"
-              className="pl-[1rem]"
+              className="w-[8rem] h-[1.5rem] pl-[1rem]"
             />
           </Link>
         </div>

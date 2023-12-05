@@ -17,7 +17,7 @@
     "start": "npx supabase start -x vector,edge-runtime,realtime",
     "stop": "npx supabase stop",
     "sql": "dbml2sql sd.dbml --postgres -o migrations/20230626060237_local.sql",
-    "type": "npx supabase gen types typescript --local > ../src/type.ts",
+    "type": "npx supabase gen types typescript --local > ../src/types/public.ts",
     "db:seed:watch": "nodemon --watch seeds/development/seeds.js --exec \"npm run db:seed\"",
     "staging:dump": "npx supabase db dump --data-only -f supabase/backup/seeds/$(date +%Y%m%d_%H%M).sql"
   },

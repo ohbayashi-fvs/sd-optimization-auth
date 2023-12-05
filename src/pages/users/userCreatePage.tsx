@@ -1,4 +1,4 @@
-import type { UserCreateType } from "@/types/user/crud";
+import type { UserType } from "@/types/type";
 import { UserHeader } from "@/features/users/components/userHeader";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -9,11 +9,11 @@ export default function UserCreatePage() {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<UserCreateType>();
+  } = useForm<UserType>();
 
   const router = useRouter();
 
-  const onSubmit = async (val: UserCreateType) => {
+  const onSubmit = async (val: UserType) => {
     const res = await fetch("/api/users/createUser", {
       method: "POST",
       body: JSON.stringify({
