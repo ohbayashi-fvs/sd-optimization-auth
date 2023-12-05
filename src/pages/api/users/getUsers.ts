@@ -19,15 +19,34 @@ export default async function getUsers(
       supabaseKey: supabaseServiceRoleKey,
     }
   );
-  // console.log(req);
 
-  const { data } = await supabaseServerClient.auth.admin.listUsers();
+  const { data: usersData } = await supabaseServerClient.auth.admin.listUsers();
+
+  const { data: profilesData } = await supabaseServerClient
+    .from("profiles")
+    .select("*,tenants(tenant_name)");
+
+  const joinedData = profilesData?.map((profile) => {
+    const user = usersData.users.find(
+      (user: any) => user.id === profile.user_id
+    );
+    const date =
+      user?.last_sign_in_at && new Date(user?.last_sign_in_at as string);
+
+    return {
+      id: profile.id,
+      user_name: profile.user_name,
+      email: user?.email,
+      tenant_name: profile.tenants.tenant_name,
+      last_sign_in_at: date ? date.toLocaleString() : "-",
+    };
+  });
 
   // session確認
   const session = await checkLogin(req, res);
 
   if (session) {
-    res.status(200).json({ users: data.users });
+    res.status(200).json({ users: joinedData });
   } else {
     res.status(401).json({});
   }
