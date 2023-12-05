@@ -7,11 +7,10 @@ import { ColumnsType } from "antd/es/table";
 export default function UserHomePage() {
   const router = useRouter();
 
-  const { data: fetchUsersData } = useQuery({
+  const { data: users } = useQuery({
     queryKey: ["getUsers"],
     queryFn: async () => {
       const res = await fetch("/api/users/getUsers", { method: "POST" });
-
       if (res.status === 200) {
         const resData = await res.json();
         return await resData.users;
@@ -24,9 +23,14 @@ export default function UserHomePage() {
     {
       key: "user_name",
       title: "ユーザー名",
-      dataIndex: ["app_metadata", "user_name"],
+      dataIndex: "user_name",
     },
     { key: "email", title: "ユーザーアドレス", dataIndex: "email" },
+    {
+      key: "organization",
+      title: "組織",
+      dataIndex: "tenant_name",
+    },
     {
       key: "last_sign_in_at",
       title: "最終ログイン",
@@ -54,14 +58,6 @@ export default function UserHomePage() {
       ),
     },
   ];
-
-  const users =
-    fetchUsersData &&
-    fetchUsersData.filter((userData: any) => {
-      if (!userData.deleted_at) {
-        return { data: userData };
-      }
-    });
 
   return (
     <>

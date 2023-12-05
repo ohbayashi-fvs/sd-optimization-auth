@@ -52,6 +52,46 @@ export interface Database {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          created_at: string | null
+          id: string
+          tenant_id: string
+          updated_at: string | null
+          user_id: string | null
+          user_name: string
+        }
+        Insert: {
+          created_at?: string | null
+          id: string
+          tenant_id: string
+          updated_at?: string | null
+          user_id?: string | null
+          user_name: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          tenant_id?: string
+          updated_at?: string | null
+          user_id?: string | null
+          user_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_tenant_id_fkey"
+            columns: ["tenant_id"]
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profiles_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       tenants: {
         Row: {
           created_at: string | null

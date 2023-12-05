@@ -506,6 +506,7 @@ export interface Database {
           recovery_token: string | null;
           role: string | null;
           updated_at: string | null;
+          user_metadata: {};
         };
         Insert: {
           aud?: string | null;
