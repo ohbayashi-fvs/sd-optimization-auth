@@ -27,9 +27,10 @@ export default async function getUsers(
     .select("*,tenants(tenant_name)");
 
   const joinedData = profilesData?.map((profile) => {
-    const user = usersData.users.find(
-      (user: any) => user.id === profile.user_id
-    );
+    const user = usersData.users.find((user) => {
+      user.id === profile.user_id;
+      console.log(user);
+    });
     const date =
       user?.last_sign_in_at && new Date(user?.last_sign_in_at as string);
 
