@@ -1,4 +1,4 @@
-import type { EditTenant } from "@/types/tenant/tenant";
+import type { EditTenant } from "@/types/type";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";

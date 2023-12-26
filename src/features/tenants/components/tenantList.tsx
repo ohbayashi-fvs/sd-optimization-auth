@@ -1,9 +1,9 @@
-import type { Tenant } from "@/types/tenant/tenant";
+import type { TenantType } from "@/types/type";
 import { useRouter } from "next/router";
 import { FC } from "react";
 
 type Props = {
-  tenants: Tenant[];
+  tenants: TenantType[];
 };
 
 export const TenantList: FC<Props> = ({ tenants }) => {
@@ -28,7 +28,7 @@ export const TenantList: FC<Props> = ({ tenants }) => {
             </tr>
           </thead>
           <tbody>
-            {tenants.map((tenant: Tenant) => (
+            {tenants.map((tenant: TenantType) => (
               <tr
                 key={tenant.id}
                 className="flex items-center border-[#FAFAFA] border-[0.15rem] border-t-0 border-x-0 border-solid h-[3.5rem]"
