@@ -1,4 +1,4 @@
-import type { UserEditType } from "@/types/type";
+import type { UserType } from "@/types/type";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
@@ -9,7 +9,7 @@ export default function UserEditPage() {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<UserEditType>();
+  } = useForm<UserType>();
 
   const router = useRouter();
 
@@ -42,7 +42,7 @@ export default function UserEditPage() {
     res.status === 401 && router.push("/auth/authLoginPage");
   };
 
-  const onSubmit = async (val: UserEditType) => {
+  const onSubmit = async (val: UserType) => {
     const res = await fetch("/api/users/editUser", {
       method: "POST",
       body: JSON.stringify({

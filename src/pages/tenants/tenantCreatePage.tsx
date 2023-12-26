@@ -1,4 +1,4 @@
-import type { CreateTenant } from "@/types/tenant/tenant";
+import type { TenantType } from "@/types/type";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { TenantHeader } from "@/features/tenants/components/tenantHeader";
@@ -8,11 +8,11 @@ export default function TenantCreatePage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateTenant>();
+  } = useForm<TenantType>();
 
   const router = useRouter();
 
-  const onSubmit = async (val: CreateTenant) => {
+  const onSubmit = async (val: TenantType) => {
     const res = await fetch("/api/tenants/createTenant", {
       method: "POST",
       body: JSON.stringify({

@@ -1,15 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { Tenant } from "@/types/tenant/tenant";
+import type { TenantType } from "@/types/type";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { supabaseAccessUrl, supabaseServiceRoleKey } from "../lib/supabase";
 import checkLogin from "../auth/session";
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default async function getTenants(
+export default async function getTenantTypes(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const supabaseServerClient = createPagesServerClient<Tenant[]>(
+  const supabaseServerClient = createPagesServerClient<TenantType[]>(
     {
       req,
       res,
