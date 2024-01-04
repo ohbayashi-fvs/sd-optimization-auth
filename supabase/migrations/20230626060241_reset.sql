@@ -8,8 +8,9 @@ language plpgsql
 security definer set search_path = public
 as $$
 begin
+  RAISE WARNING 'メッセージ %', new;
   insert into public.profiles (id, user_name, tenant_id)
-  values (new.id, new.raw_app_meta_data ->> 'user_name', cast(new.raw_app_meta_data ->> 'tenant_id' as uuid));
+  values (new.id, new.raw_user_meta_data ->> 'user_name', cast(new.raw_user_meta_data ->> 'tenant_id' as uuid));
   return new;
 end;
 $$;
