@@ -4,8 +4,10 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { supabaseAccessUrl, supabaseServiceRoleKey } from "../lib/supabase";
 import checkLogin from "../auth/session";
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function createUser(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   // Session Confirmation
   const session = await checkLogin(req, res);
 
@@ -22,7 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     );
     const userData = JSON.parse(req.body);
 
-    const error = await supabaseServerClient.auth.admin.createUser({
+    await supabaseServerClient.auth.admin.createUser({
       email: userData.email,
       email_confirm: true,
       password: userData.password,
@@ -36,4 +38,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   } else {
     res.status(401).json({});
   }
-};
+}

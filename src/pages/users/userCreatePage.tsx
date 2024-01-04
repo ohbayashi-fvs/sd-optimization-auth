@@ -87,17 +87,6 @@ export default function UserCreatePage() {
               所属
             </label>
             <div className="grid justify-start items-center col-span-2 pt-[1.5rem]">
-              {/* <input
-                {...register("email", { required: "※入力は必須です" })}
-                className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20rem]"
-                type="email"
-                name="email"
-                autoComplete="email"
-                id="email"
-              />
-              <div className="text-red-500">
-                {errors.email && errors.email.message}
-              </div> */}
               <select
                 {...register("app_metadata.tenant_id", {
                   required: "※入力は必須です",
