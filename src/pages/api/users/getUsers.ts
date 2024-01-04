@@ -20,16 +20,22 @@ export default async function getUsers(
     }
   );
 
+  // get auth.users
   const { data: usersData } = await supabaseServerClient.auth.admin.listUsers();
 
+  // get public.profile
   const { data: profilesData } = await supabaseServerClient
     .from("profiles")
     .select("*,tenants(tenant_name)");
 
+  // Data Coalescing and Refining
   const joinedData = profilesData?.map((profile) => {
     const user = usersData.users.find((user) => {
-      user.id === profile.user_id;
+      if (user.id === profile.id) {
+        return user;
+      }
     });
+
     const date =
       user?.last_sign_in_at && new Date(user?.last_sign_in_at as string);
 
@@ -37,12 +43,12 @@ export default async function getUsers(
       id: profile.id,
       user_name: profile.user_name,
       email: user?.email,
-      tenant_name: profile.tenants.tenant_name,
+      tenant_name: profile?.tenants.tenant_name,
       last_sign_in_at: date ? date.toLocaleString() : "-",
     };
   });
 
-  // session確認
+  // Session Confirmation
   const session = await checkLogin(req, res);
 
   if (session) {

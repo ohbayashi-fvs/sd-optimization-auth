@@ -1,11 +1,11 @@
-import { Database as authDatabase } from "./supabase";
-type authTables = authDatabase["auth"]["Tables"];
+import { Database as supabaseDatabase } from "./supabase";
+import { Database as publicDataBase } from "./public";
+
+type authTables = supabaseDatabase["auth"]["Tables"];
 export type UserType = authTables["users"]["Row"];
 
-import { Database as publicTenantDataBase } from "./public";
-type publicTenantTables = publicTenantDataBase["public"]["Tables"];
+type publicTenantTables = publicDataBase["public"]["Tables"];
 export type TenantType = publicTenantTables["tenants"]["Row"];
 
-import { Database as publicProfilesDataBase } from "./public";
-type publicProfilesTables = publicProfilesDataBase["public"]["Tables"];
+type publicProfilesTables = publicDataBase["public"]["Tables"];
 export type ProfilesType = publicProfilesTables["profiles"]["Row"];
