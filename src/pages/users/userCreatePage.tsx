@@ -11,9 +11,9 @@ export default function UserCreatePage() {
     getValues,
     formState: { errors },
   } = useForm<UserType>();
-
   const router = useRouter();
 
+  // get public.tenants
   const { data: tenants } = useQuery({
     queryKey: ["getTenants"],
     queryFn: async () => {
@@ -27,8 +27,7 @@ export default function UserCreatePage() {
     },
   });
 
-  // console.log(tenants);
-
+  // create auth.user
   const onSubmit = async (val: UserType) => {
     const res = await fetch("/api/users/createUser", {
       method: "POST",

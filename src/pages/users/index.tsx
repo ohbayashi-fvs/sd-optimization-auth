@@ -20,8 +20,6 @@ export default function UserHomePage() {
     },
   });
 
-  console.log(users);
-
   const columnName: ColumnsType<Record<string, any>> = [
     {
       key: "user_name",

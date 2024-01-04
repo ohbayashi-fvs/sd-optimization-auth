@@ -19,14 +19,14 @@ export default async function getTenantTypes(
       supabaseKey: supabaseServiceRoleKey,
     }
   );
+
+  // get public.tenants
   const { data } = await supabaseServerClient
     .from("tenants")
     .select()
     .order("created_at");
 
-  // console.log(data);
-
-  // session確認
+  // Session Confirmation
   const session = await checkLogin(req, res);
 
   if (session && data) {

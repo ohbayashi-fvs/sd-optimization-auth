@@ -20,21 +20,21 @@ export default async function getUsers(
     }
   );
 
+  // get auth.users
   const { data: usersData } = await supabaseServerClient.auth.admin.listUsers();
 
+  // get public.profile
   const { data: profilesData } = await supabaseServerClient
     .from("profiles")
     .select("*,tenants(tenant_name)");
 
+  // Data Coalescing and Refining
   const joinedData = profilesData?.map((profile) => {
-    // console.log("プロフィール", profile.tenant_id);
     const user = usersData.users.find((user) => {
-      // console.log("ユーザー", user.id);
       if (user.id === profile.id) {
         return user;
       }
     });
-    // console.log(typeof user);
 
     const date =
       user?.last_sign_in_at && new Date(user?.last_sign_in_at as string);
@@ -48,7 +48,7 @@ export default async function getUsers(
     };
   });
 
-  // session確認
+  // Session Confirmation
   const session = await checkLogin(req, res);
 
   if (session) {

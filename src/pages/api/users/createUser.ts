@@ -6,7 +6,7 @@ import checkLogin from "../auth/session";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  // session確認
+  // Session Confirmation
   const session = await checkLogin(req, res);
 
   if (session) {
@@ -21,19 +21,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }
     );
     const userData = JSON.parse(req.body);
-    console.log(userData.tenant_id);
 
     const error = await supabaseServerClient.auth.admin.createUser({
-      app_metadata: {
+      email: userData.email,
+      email_confirm: true,
+      password: userData.password,
+      user_metadata: {
         tenant_id: userData.tenant_id,
         user_name: userData.user_name,
       },
-      email: userData.email,
-      email_confirm: true,
-      // password: userData.password,
     });
-
-    console.log(error.data);
 
     res.status(200).json({});
   } else {
