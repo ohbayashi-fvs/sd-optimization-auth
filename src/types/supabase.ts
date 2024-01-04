@@ -469,6 +469,7 @@ export interface Database {
         Row: {
           app_metadata: {
             user_name: string | null;
+            tenant_id: string | null;
           };
           aud: string | null;
           banned_until: string | null;

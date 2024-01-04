@@ -7,6 +7,7 @@ import { ColumnsType } from "antd/es/table";
 export default function UserHomePage() {
   const router = useRouter();
 
+  // get users_data
   const { data: users } = useQuery({
     queryKey: ["getUsers"],
     queryFn: async () => {
@@ -18,6 +19,8 @@ export default function UserHomePage() {
       res.status === 401 && router.push("/auth/authLoginPage");
     },
   });
+
+  console.log(users);
 
   const columnName: ColumnsType<Record<string, any>> = [
     {

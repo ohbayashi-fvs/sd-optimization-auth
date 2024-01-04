@@ -24,6 +24,8 @@ export default async function getTenantTypes(
     .select()
     .order("created_at");
 
+  // console.log(data);
+
   // session確認
   const session = await checkLogin(req, res);
 

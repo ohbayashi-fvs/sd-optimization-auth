@@ -8,11 +8,12 @@ language plpgsql
 security definer set search_path = public
 as $$
 begin
-  insert into public.profiles (id, user_name, user_id, tenant_id) values (new.id, new.raw_app_meta_data ->>'user_name', cast(new.raw_app_meta_data ->>'user_id' as uuid), cast(new.raw_app_meta_data ->>'tenant_id' as uuid));
+  insert into public.profiles (id, user_name, tenant_id)
+  values (new.id, new.raw_app_meta_data ->> 'user_name', cast(new.raw_app_meta_data ->> 'tenant_id' as uuid));
   return new;
 end;
 $$;
-
+-- cast(new.raw_app_meta_data ->>'user_id' as uuid),
 
 -- trigger the function every time a user is created
 create trigger on_auth_user_created

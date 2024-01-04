@@ -27,9 +27,15 @@ export default async function getUsers(
     .select("*,tenants(tenant_name)");
 
   const joinedData = profilesData?.map((profile) => {
+    // console.log("プロフィール", profile.tenant_id);
     const user = usersData.users.find((user) => {
-      user.id === profile.user_id;
+      // console.log("ユーザー", user.id);
+      if (user.id === profile.id) {
+        return user;
+      }
     });
+    // console.log(typeof user);
+
     const date =
       user?.last_sign_in_at && new Date(user?.last_sign_in_at as string);
 
@@ -37,7 +43,7 @@ export default async function getUsers(
       id: profile.id,
       user_name: profile.user_name,
       email: user?.email,
-      tenant_name: profile.tenants.tenant_name,
+      tenant_name: profile?.tenants.tenant_name,
       last_sign_in_at: date ? date.toLocaleString() : "-",
     };
   });

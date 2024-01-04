@@ -9,7 +9,7 @@ CREATE TABLE "tenants" (
 
 CREATE TABLE "profiles" (
   "id" uuid PRIMARY KEY,
-  "user_name" text NOT NULL,
-  "user_id" uuid REFERENCES auth.users (id) ON DELETE CASCADE,
-  "tenant_id" uuid REFERENCES tenants (id) NOT NULL
+  "user_name" text,
+  -- "user_id" uuid REFERENCES auth.users (id) ON DELETE CASCADE,
+  "tenant_id" uuid REFERENCES tenants (id)
 );
