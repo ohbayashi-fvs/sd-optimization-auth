@@ -15,7 +15,8 @@ export default function UserEditPage() {
 
   const userId = router.query.id;
 
-  const { data: user } = useQuery({
+  // get user_data
+  const { data: user, isLoading: userDataIsLoading } = useQuery({
     queryKey: [userId],
     queryFn: async () => {
       const res = await fetch("/api/users/getUser", {
@@ -24,15 +25,29 @@ export default function UserEditPage() {
           id: userId,
         }),
       });
-
       if (res.status === 200) {
         const resData = await res.json();
-        return await resData.users.user;
+        return await resData.user;
       }
       res.status === 401 && router.push("/auth/authLoginPage");
     },
   });
 
+  // get public.tenants
+  const { data: tenants, isLoading: tenantsDataIsLoading } = useQuery({
+    queryKey: ["getTenants"],
+    queryFn: async () => {
+      const res = await fetch("/api/tenants/getTenants", { method: "POST" });
+
+      if (res.status === 200) {
+        const resData = await res.json();
+        return await resData.tenants;
+      }
+      res.status === 401 && router.push("/auth/authLoginPage");
+    },
+  });
+
+  // logical delete user_data
   const onClickDeleteButton = async () => {
     const res = await fetch("/api/users/deleteUser", {
       method: "POST",
@@ -42,6 +57,7 @@ export default function UserEditPage() {
     res.status === 401 && router.push("/auth/authLoginPage");
   };
 
+  // update user_data
   const onSubmit = async (val: UserType) => {
     const res = await fetch("/api/users/editUser", {
       method: "POST",
@@ -56,7 +72,9 @@ export default function UserEditPage() {
     res.status === 401 && router.push("/auth/authLoginPage");
   };
 
-  return (
+  return userDataIsLoading || tenantsDataIsLoading ? (
+    <></>
+  ) : (
     <div className="max-w-[50rem] mx-auto p-[5rem]">
       <form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white">
         <div className="grid grid-cols-3 gap-[1.5rem]">
@@ -70,7 +88,7 @@ export default function UserEditPage() {
               })}
               className="h-[2.5rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20rem]"
               type="text"
-              defaultValue={user ? user.app_metadata.user_name : ""}
+              defaultValue={user ? user[0].user_name : ""}
             />
             <div className="text-red-500">
               {errors.app_metadata?.user_name &&
@@ -89,10 +107,47 @@ export default function UserEditPage() {
               className="h-[2.5rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20rem]"
               type="email"
               autoComplete="email"
-              defaultValue={user ? user.email : ""}
+              defaultValue={user ? user[0].email : ""}
             />
             <div className="text-red-500">
               {errors.email && errors.email.message}
+            </div>
+          </div>
+
+          <label className="grid justify-end items-center pt-[1.5rem] text-[1rem]">
+            所属
+          </label>
+          <div className="grid justify-start items-center col-span-2 pt-[1.5rem]">
+            <select
+              {...register("app_metadata.tenant_id", {
+                required: "※入力は必須です",
+              })}
+              className="h-[2.3rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20.4rem]"
+              defaultValue={user ? user[0].tenant_name : ""}
+              // value={user && user[0].tenant_name}
+            >
+              {tenants &&
+                tenants.map((tenant: any) => (
+                  <option
+                    id="tenant_id"
+                    key={tenant.id}
+                    defaultValue={tenant.tenant_name}
+                    value={tenant.tenant_name}
+                    // selected={
+                    //   tenant &&
+                    //   user &&
+                    //   tenant.tenant_name === user[0].tenant_name
+                    //     ? true
+                    //     : false
+                    // }
+                  >
+                    {tenant.tenant_name}
+                  </option>
+                ))}
+            </select>
+            <div className="text-red-500">
+              {errors.app_metadata?.tenant_id &&
+                errors.app_metadata?.tenant_id.message}
             </div>
           </div>
 
