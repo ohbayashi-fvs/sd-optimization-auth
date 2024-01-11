@@ -40,19 +40,26 @@ export default async function getUsers(
         }
       });
 
-      const date =
-        user?.last_sign_in_at && new Date(user?.last_sign_in_at as string);
+      if (user) {
+        const date =
+          user.last_sign_in_at && new Date(user.last_sign_in_at as string);
 
-      return {
-        id: profile.id,
-        user_name: profile.user_name,
-        email: user?.email,
-        tenant_name: profile?.tenants.tenant_name,
-        last_sign_in_at: date ? date.toLocaleString() : "-",
-      };
+        return {
+          id: profile.id,
+          user_name: profile.user_name,
+          email: user.email,
+          tenant_name: profile.tenants.tenant_name,
+          last_sign_in_at: date ? date.toLocaleString() : "-",
+        };
+      }
     });
 
-    res.status(200).json({ users: joinedData });
+    // filtered data
+    const filteredData = joinedData?.filter((data) => {
+      return data !== undefined && data;
+    });
+
+    res.status(200).json({ users: filteredData && filteredData });
   } else {
     res.status(401).json({});
   }
