@@ -52,12 +52,14 @@ export default function UserEditPage() {
 
   // logical delete user_data
   const onClickDeleteButton = async () => {
-    const res = await fetch("/api/users/deleteUser", {
-      method: "POST",
-      body: JSON.stringify({ id: router.query.id }),
-    });
-    res.status === 200 && router.push("/users");
-    res.status === 401 && router.push("/auth/authLoginPage");
+    if (confirm("本当に削除しますか") === true) {
+      const res = await fetch("/api/users/deleteUser", {
+        method: "POST",
+        body: JSON.stringify({ id: router.query.id }),
+      });
+      res.status === 200 && router.push("/users");
+      res.status === 401 && router.push("/auth/authLoginPage");
+    }
   };
 
   // update user_data
