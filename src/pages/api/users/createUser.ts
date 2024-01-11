@@ -22,18 +22,19 @@ export default async function createUser(
         supabaseKey: supabaseServiceRoleKey,
       }
     );
-    const userData = JSON.parse(req.body);
+    const user = await JSON.parse(req.body);
 
-    await supabaseServerClient.auth.admin.createUser({
-      email: userData.email,
+    const data = await supabaseServerClient.auth.admin.createUser({
+      email: user.email,
       email_confirm: true,
-      password: userData.password,
+      password: user.password,
       user_metadata: {
-        tenant_id: userData.tenant_id,
-        user_name: userData.user_name,
+        tenant_id: user.tenant_id,
+        user_name: user.user_name,
       },
     });
 
+    data.error?.status === 422 && res.status(422).json({});
     res.status(200).json({});
   } else {
     res.status(401).json({});

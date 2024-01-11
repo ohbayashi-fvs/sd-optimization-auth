@@ -3,6 +3,7 @@ import { UserHeader } from "@/features/users/components/userHeader";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function UserCreatePage() {
   const {
@@ -11,7 +12,10 @@ export default function UserCreatePage() {
     getValues,
     formState: { errors },
   } = useForm<UserType>();
+
   const router = useRouter();
+
+  const [isUsedEmail, setIsUsedEmail] = useState<string>("");
 
   // get public.tenants
   const { data: tenants } = useQuery({
@@ -40,6 +44,8 @@ export default function UserCreatePage() {
     });
     res.status === 200 && router.push("/users");
     res.status === 401 && router.push("/auth/authLoginPage");
+    res.status === 422 &&
+      setIsUsedEmail("送信したメールアドレスは使用されています");
   };
 
   return (
@@ -71,7 +77,12 @@ export default function UserCreatePage() {
             </label>
             <div className="grid justify-start items-center col-span-2 pt-[1.5rem]">
               <input
-                {...register("email", { required: "※入力は必須です" })}
+                {...register("email", {
+                  required: "※入力は必須です",
+                  onChange: () => {
+                    setIsUsedEmail("");
+                  },
+                })}
                 className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20rem]"
                 type="email"
                 name="email"
@@ -81,6 +92,7 @@ export default function UserCreatePage() {
               <div className="text-red-500">
                 {errors.email && errors.email.message}
               </div>
+              <div className="text-red-500">{isUsedEmail}</div>
             </div>
 
             <label className="grid justify-end items-center pt-[1.5rem] text-[1rem]">
@@ -113,7 +125,7 @@ export default function UserCreatePage() {
               <input
                 {...register("password", {
                   required: "※入力は必須です",
-                  validate: (value: string) => {
+                  validate: (value) => {
                     return value.length >= 8 || "8文字以上で作成してください";
                   },
                 })}
@@ -138,7 +150,7 @@ export default function UserCreatePage() {
                   validate: (value) => {
                     return (
                       value === getValues("password") ||
-                      "メールアドレスが一致しません"
+                      "パスワードが一致しません"
                     );
                   },
                 })}
