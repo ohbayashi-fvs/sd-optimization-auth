@@ -20,13 +20,19 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         supabaseKey: supabaseServiceRoleKey,
       }
     );
-    const user = JSON.parse(req.body);
-    await supabaseServerClient.auth.admin.updateUserById(user.id, {
-      app_metadata: { user_name: user.user_name },
+    const user = await JSON.parse(req.body);
+
+    const data = await supabaseServerClient.auth.admin.updateUserById(user.id, {
       email: user.email,
+      email_confirm: true,
       password: user.password,
+      user_metadata: {
+        tenant_id: user.tenant_id,
+        user_name: user.user_name,
+      },
     });
 
+    data.error?.status === 500 && res.status(500).json({});
     res.status(200).json({});
   } else {
     res.status(401).json({});

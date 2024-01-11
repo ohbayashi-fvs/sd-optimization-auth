@@ -21,7 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }
     );
     const user = JSON.parse(req.body);
-    await supabaseServerClient.auth.admin.deleteUser(user.id, true);
+    await supabaseServerClient.auth.admin.deleteUser(user.id);
 
     res.status(200).json({});
   } else {

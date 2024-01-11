@@ -4,32 +4,30 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { supabaseAccessUrl, supabaseServiceRoleKey } from "../lib/supabase";
 import checkLogin from "../auth/session";
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default async function getTenantTypes(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const supabaseServerClient = createPagesServerClient<TenantType[]>(
-    {
-      req,
-      res,
-    },
-    {
-      supabaseUrl: supabaseAccessUrl,
-      supabaseKey: supabaseServiceRoleKey,
-    }
-  );
-
-  // get public.tenants
-  const { data } = await supabaseServerClient
-    .from("tenants")
-    .select()
-    .order("created_at");
-
   // Session Confirmation
   const session = await checkLogin(req, res);
+  if (session) {
+    const supabaseServerClient = createPagesServerClient<TenantType[]>(
+      {
+        req,
+        res,
+      },
+      {
+        supabaseUrl: supabaseAccessUrl,
+        supabaseKey: supabaseServiceRoleKey,
+      }
+    );
 
-  if (session && data) {
+    // get public.tenants
+    const { data } = await supabaseServerClient
+      .from("tenants")
+      .select()
+      .order("created_at");
+
     res.status(200).json({ tenants: data });
   } else {
     res.status(401).json({});

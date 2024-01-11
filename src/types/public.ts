@@ -54,13 +54,14 @@ export interface Database {
       };
       profiles: {
         Row: {
-          created_at: string | null;
           id: string;
-          tenant_id: string;
-          updated_at: string | null;
-          user_id: string | null;
           user_name: string;
-          email: string;
+          created_at: string | null;
+          updated_at: string | null;
+          tenant_id: string;
+          tenants: {
+            tenant_name: string;
+          };
         };
         Insert: {
           created_at?: string | null;

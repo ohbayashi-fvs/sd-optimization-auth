@@ -2,6 +2,7 @@ import type { UserType } from "@/types/type";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function UserEditPage() {
   const {
@@ -13,9 +14,12 @@ export default function UserEditPage() {
 
   const router = useRouter();
 
+  const [isUsedEmail, setIsUsedEmail] = useState<string>("");
+
   const userId = router.query.id;
 
-  const { data: user } = useQuery({
+  // get user_data
+  const { data: user, isLoading: userDataIsLoading } = useQuery({
     queryKey: [userId],
     queryFn: async () => {
       const res = await fetch("/api/users/getUser", {
@@ -24,39 +28,61 @@ export default function UserEditPage() {
           id: userId,
         }),
       });
-
       if (res.status === 200) {
         const resData = await res.json();
-        return await resData.users.user;
+        return await resData.user[0];
       }
       res.status === 401 && router.push("/auth/authLoginPage");
     },
   });
 
+  // get public.tenants
+  const { data: tenants, isLoading: tenantsDataIsLoading } = useQuery({
+    queryKey: ["getTenants"],
+    queryFn: async () => {
+      const res = await fetch("/api/tenants/getTenants", { method: "POST" });
+
+      if (res.status === 200) {
+        const resData = await res.json();
+        return await resData.tenants;
+      }
+      res.status === 401 && router.push("/auth/authLoginPage");
+    },
+  });
+
+  // logical delete user_data
   const onClickDeleteButton = async () => {
-    const res = await fetch("/api/users/deleteUser", {
-      method: "POST",
-      body: JSON.stringify({ id: router.query.id }),
-    });
-    res.status === 200 && router.push("/users");
-    res.status === 401 && router.push("/auth/authLoginPage");
+    if (confirm("本当に削除しますか") === true) {
+      const res = await fetch("/api/users/deleteUser", {
+        method: "POST",
+        body: JSON.stringify({ id: router.query.id }),
+      });
+      res.status === 200 && router.push("/users");
+      res.status === 401 && router.push("/auth/authLoginPage");
+    }
   };
 
+  // update user_data
   const onSubmit = async (val: UserType) => {
     const res = await fetch("/api/users/editUser", {
       method: "POST",
       body: JSON.stringify({
         id: router.query.id,
-        user_name: val.app_metadata.user_name,
         email: val.email,
         password: val.password,
+        tenant_id: val.app_metadata.tenant_id,
+        user_name: val.app_metadata.user_name,
       }),
     });
     res.status === 200 && router.push("/users");
     res.status === 401 && router.push("/auth/authLoginPage");
+    res.status === 500 &&
+      setIsUsedEmail("送信したメールアドレスは使用されています");
   };
 
-  return (
+  return userDataIsLoading || tenantsDataIsLoading ? (
+    <></>
+  ) : (
     <div className="max-w-[50rem] mx-auto p-[5rem]">
       <form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white">
         <div className="grid grid-cols-3 gap-[1.5rem]">
@@ -70,7 +96,7 @@ export default function UserEditPage() {
               })}
               className="h-[2.5rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20rem]"
               type="text"
-              defaultValue={user ? user.app_metadata.user_name : ""}
+              defaultValue={user ? user.user_name : ""}
             />
             <div className="text-red-500">
               {errors.app_metadata?.user_name &&
@@ -85,6 +111,9 @@ export default function UserEditPage() {
             <input
               {...register("email", {
                 required: "※入力は必須です",
+                onChange: () => {
+                  setIsUsedEmail("");
+                },
               })}
               className="h-[2.5rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20rem]"
               type="email"
@@ -93,6 +122,31 @@ export default function UserEditPage() {
             />
             <div className="text-red-500">
               {errors.email && errors.email.message}
+            </div>
+            <div className="text-red-500">{isUsedEmail}</div>
+          </div>
+
+          <label className="grid justify-end items-center pt-[1.5rem] text-[1rem]">
+            所属
+          </label>
+          <div className="grid justify-start items-center col-span-2 pt-[1.5rem]">
+            <select
+              {...register("app_metadata.tenant_id", {
+                required: "※入力は必須です",
+              })}
+              className="h-[2.3rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20.4rem]"
+              defaultValue={user.tenant_id}
+            >
+              {tenants &&
+                tenants.map((tenant: any) => (
+                  <option id="tenant_id" key={tenant.id} value={tenant.id}>
+                    {tenant.tenant_name}
+                  </option>
+                ))}
+            </select>
+            <div className="text-red-500">
+              {errors.app_metadata?.tenant_id &&
+                errors.app_metadata?.tenant_id.message}
             </div>
           </div>
 
