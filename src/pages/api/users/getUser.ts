@@ -28,15 +28,11 @@ export default async function getUser(
     const { data: userData } =
       await supabaseServerClient.auth.admin.getUserById(user.id);
 
-    console.log(userData);
-
     // get public.profile
     const { data: profileData } = await supabaseServerClient
       .from("profiles")
       .select("*,tenants(tenant_name)")
       .eq("id", userData.user?.id);
-
-    // console.log(profileData);
 
     // Data Coalescing and Refining
     const joinedData = profileData?.map((profile: ProfilesType) => {
@@ -45,10 +41,9 @@ export default async function getUser(
         user_name: profile?.user_name,
         email: userData.user?.email,
         tenant_name: profile?.tenants.tenant_name,
+        tenant_id: profile?.tenant_id,
       };
     });
-
-    // console.log(joinedData);
 
     joinedData && res.status(200).json({ user: joinedData });
   } else {

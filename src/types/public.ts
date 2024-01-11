@@ -58,8 +58,8 @@ export interface Database {
           user_name: string;
           created_at: string | null;
           updated_at: string | null;
+          tenant_id: string;
           tenants: {
-            tenant_id: string;
             tenant_name: string;
           };
         };

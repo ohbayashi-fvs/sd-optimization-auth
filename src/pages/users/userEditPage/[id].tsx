@@ -2,6 +2,7 @@ import type { UserType } from "@/types/type";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function UserEditPage() {
   const {
@@ -12,6 +13,8 @@ export default function UserEditPage() {
   } = useForm<UserType>();
 
   const router = useRouter();
+
+  const [isUsedEmail, setIsUsedEmail] = useState<string>("");
 
   const userId = router.query.id;
 
@@ -27,7 +30,7 @@ export default function UserEditPage() {
       });
       if (res.status === 200) {
         const resData = await res.json();
-        return await resData.user;
+        return await resData.user[0];
       }
       res.status === 401 && router.push("/auth/authLoginPage");
     },
@@ -63,13 +66,16 @@ export default function UserEditPage() {
       method: "POST",
       body: JSON.stringify({
         id: router.query.id,
-        user_name: val.app_metadata.user_name,
         email: val.email,
         password: val.password,
+        tenant_id: val.app_metadata.tenant_id,
+        user_name: val.app_metadata.user_name,
       }),
     });
     res.status === 200 && router.push("/users");
     res.status === 401 && router.push("/auth/authLoginPage");
+    res.status === 500 &&
+      setIsUsedEmail("送信したメールアドレスは使用されています");
   };
 
   return userDataIsLoading || tenantsDataIsLoading ? (
@@ -88,7 +94,7 @@ export default function UserEditPage() {
               })}
               className="h-[2.5rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20rem]"
               type="text"
-              defaultValue={user ? user[0].user_name : ""}
+              defaultValue={user ? user.user_name : ""}
             />
             <div className="text-red-500">
               {errors.app_metadata?.user_name &&
@@ -103,15 +109,19 @@ export default function UserEditPage() {
             <input
               {...register("email", {
                 required: "※入力は必須です",
+                onChange: () => {
+                  setIsUsedEmail("");
+                },
               })}
               className="h-[2.5rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20rem]"
               type="email"
               autoComplete="email"
-              defaultValue={user ? user[0].email : ""}
+              defaultValue={user ? user.email : ""}
             />
             <div className="text-red-500">
               {errors.email && errors.email.message}
             </div>
+            <div className="text-red-500">{isUsedEmail}</div>
           </div>
 
           <label className="grid justify-end items-center pt-[1.5rem] text-[1rem]">
@@ -123,24 +133,11 @@ export default function UserEditPage() {
                 required: "※入力は必須です",
               })}
               className="h-[2.3rem] rounded-sm border-[0.1rem] border-main text-[1.2rem] min-w-[20.4rem]"
-              defaultValue={user ? user[0].tenant_name : ""}
-              // value={user && user[0].tenant_name}
+              defaultValue={user.tenant_id}
             >
               {tenants &&
                 tenants.map((tenant: any) => (
-                  <option
-                    id="tenant_id"
-                    key={tenant.id}
-                    defaultValue={tenant.tenant_name}
-                    value={tenant.tenant_name}
-                    // selected={
-                    //   tenant &&
-                    //   user &&
-                    //   tenant.tenant_name === user[0].tenant_name
-                    //     ? true
-                    //     : false
-                    // }
-                  >
+                  <option id="tenant_id" key={tenant.id} value={tenant.id}>
                     {tenant.tenant_name}
                   </option>
                 ))}
