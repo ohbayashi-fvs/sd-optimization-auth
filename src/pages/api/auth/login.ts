@@ -15,30 +15,39 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
     }
   );
 
+  // ログイン
+  const loginData = JSON.parse(req.body);
+  await supabaseServerClient.auth.signInWithPassword({
+    email: loginData.email,
+    password: loginData.password,
+  });
+
   // DBから登録しているIPアドレス一覧の取得
   const { data: dbIpAddresses, error: dbError } = await supabaseServerClient
     .from("ip_address")
     .select("addresses");
 
-  // クライアントのIPアドレス取得
-  const clientIpAddress = await fetch("https://ipinfo.io?callback").then(
-    (res) => res.json().then((json) => json.ip)
-  );
+  // IPアドレス取得
+  const clientIpAddress = await fetch(
+    "https://ipinfo.io?callback=callback"
+  ).then((res) => res.json().then((json) => json.ip));
+
+  // クライアントのIPアドレス取得(new)
+  const ip = req.headers["x-forwarded-for"];
 
   // クライアントが登録されているIPアドレスを使用しているかチェックする
   const checkIpAddress = dbIpAddresses?.find((ipAddress) => {
-    if (ipAddress.addresses === clientIpAddress) {
+    console.log(ipAddress.addresses, ip);
+    if (ipAddress.addresses === ip) {
       return true;
     }
   });
 
-  // IPアドレス制限にひっかからなければ、ログイン処理を通す
-  if (checkIpAddress) {
-    const loginData = JSON.parse(req.body);
-    await supabaseServerClient.auth.signInWithPassword({
-      email: loginData.email,
-      password: loginData.password,
-    });
+  // console.log(checkIpAddress, ip);
+
+  // IPアドレスが登録されてなければ、ログアウトする
+  if (!checkIpAddress) {
+    await supabaseServerClient.auth.signOut();
   }
 
   // session確認
