@@ -16,6 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       supabaseKey: supabaseServiceRoleKey,
     }
   );
+
   const loginData = JSON.parse(req.body);
   await supabaseServerClient.auth.signInWithPassword({
     email: loginData.email,
