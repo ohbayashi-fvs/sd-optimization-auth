@@ -28,17 +28,23 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
     .select("addresses");
 
   // IPアドレス取得
-  const clientIpAddress = await fetch(
-    "https://ipinfo.io?callback=callback"
-  ).then((res) => res.json().then((json) => json.ip));
+  // const clientIpAddress = await fetch(
+  //   "https://ipinfo.io?callback=callback"
+  // ).then((res) => res.json().then((json) => json.ip));
 
   // クライアントのIPアドレス取得(new)
-  const ip = req.headers["x-forwarded-for"];
+  console.log(req.headers);
+  const ip = req.headers["x-forwarded-for"] as string;
+
+  // ::ffff:127.0.0.1などの値のときは正規表現を使い127.0.0.1の形に整形する
+  const pattern = /^::ffff:(\d+\.\d+\.\d+\.\d+)$/;
+  const match = ip?.match(pattern);
+  const useIp = match && match[1];
 
   // クライアントが登録されているIPアドレスを使用しているかチェックする
   const checkIpAddress = dbIpAddresses?.find((ipAddress) => {
-    console.log(ipAddress.addresses, ip);
-    if (ipAddress.addresses === ip) {
+    console.log(ipAddress.addresses, useIp);
+    if (ipAddress.addresses === useIp) {
       return true;
     }
   });

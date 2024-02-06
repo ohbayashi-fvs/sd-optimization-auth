@@ -1,4 +1,4 @@
-import type { EditTenant } from "@/types/type";
+import type { TenantType } from "@/types/type";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
@@ -8,7 +8,7 @@ export default function EditUserPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<EditTenant>();
+  } = useForm<TenantType>();
 
   const router = useRouter();
 
@@ -41,7 +41,7 @@ export default function EditUserPage() {
     res.status === 401 && router.push("/auth/authLoginPage");
   };
 
-  const onSubmit = async (val: EditTenant) => {
+  const onSubmit = async (val: TenantType) => {
     const res = await fetch("/api/tenants/editTenant", {
       method: "POST",
       body: JSON.stringify({
