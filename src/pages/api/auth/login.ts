@@ -33,13 +33,16 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
   // ).then((res) => res.json().then((json) => json.ip));
 
   // クライアントのIPアドレス取得
-  console.log(req.headers);
+  // console.log(req.headers);
   const ip = req.headers["x-forwarded-for"] as string;
+  console.log(ip);
 
   // ::ffff:127.0.0.1などの値のときは正規表現を使い127.0.0.1の形に整形する
-  const pattern = /^::ffff:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
+  const pattern = /^::ffff:(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})$/;
   const match = ip?.match(pattern);
   const useIp = match && match[1];
+
+  console.log(useIp);
 
   // クライアントが登録されているIPアドレスを使用しているかチェックする
   const checkIpAddress = dbIpAddresses?.find((ipAddress) => {
