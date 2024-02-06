@@ -32,12 +32,12 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
   //   "https://ipinfo.io?callback=callback"
   // ).then((res) => res.json().then((json) => json.ip));
 
-  // クライアントのIPアドレス取得(new)
+  // クライアントのIPアドレス取得
   console.log(req.headers);
   const ip = req.headers["x-forwarded-for"] as string;
 
   // ::ffff:127.0.0.1などの値のときは正規表現を使い127.0.0.1の形に整形する
-  const pattern = /^::ffff:(\d+\.\d+\.\d+\.\d+)$/;
+  const pattern = /^::ffff:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
   const match = ip?.match(pattern);
   const useIp = match && match[1];
 
