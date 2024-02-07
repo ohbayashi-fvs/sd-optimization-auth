@@ -1,6 +1,6 @@
 import type { UserType } from "@/types/type";
 import { FC } from "react";
-import { Table } from "antd/";
+import { Spin, Table } from "antd/";
 import { ColumnsType } from "antd/es/table";
 
 type Props = {
@@ -9,15 +9,11 @@ type Props = {
 };
 
 export const UserList: FC<Props> = ({ columnName, users }) => {
-  if (!users) {
-    return <>Loading...</>;
-  }
-
-  return (
-    <>
-      <div className="max-w-[53rem] mx-auto my-[4.5rem]">
-        <Table columns={columnName} dataSource={users} rowKey={"id"} />
-      </div>
-    </>
+  return !users ? (
+    <Spin size="large" className="flex justify-center my-[10rem]" />
+  ) : (
+    <div className="max-w-[53rem] mx-auto my-[4.5rem] px-[1rem]">
+      <Table columns={columnName} dataSource={users} rowKey={"id"} />
+    </div>
   );
 };
