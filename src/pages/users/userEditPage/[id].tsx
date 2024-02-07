@@ -82,15 +82,15 @@ export default function UserEditPage() {
   };
 
   return userDataIsLoading || tenantsDataIsLoading ? (
-    <></>
+    <div className="flex justify-center mt-[8rem]">データ取得中...</div>
   ) : (
     <div className="max-w-[100rem] mx-auto p-[4.5rem]">
       <form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white">
         <div className="grid grid-cols-3 gap-[1.2rem] ml-[15rem] mr-[8rem]">
-          <label className="grid justify-end items-center text-[1rem] col-span-1">
+          <label className="grid justify-end items-center text-[1rem]">
             ユーザー名
           </label>
-          <div className="grid justify-start items-center col-span-1">
+          <div className="grid justify-start items-center">
             <input
               {...register("app_metadata.user_name", {
                 required: "※入力は必須です",
@@ -100,7 +100,7 @@ export default function UserEditPage() {
               defaultValue={user ? user.user_name : ""}
             />
           </div>
-          <div className="text-red-500 grid justify-start items-center col-span-1">
+          <div className="text-red-500 grid justify-start items-center">
             {errors.app_metadata?.user_name &&
               errors.app_metadata?.user_name.message}
           </div>
@@ -108,7 +108,7 @@ export default function UserEditPage() {
           <label className="grid justify-end items-center pt-[1.5rem] text-[1rem]">
             メールアドレス
           </label>
-          <div className="grid justify-start items-center col-span-1 pt-[1.5rem]">
+          <div className="grid justify-start items-center pt-[1.5rem]">
             <input
               {...register("email", {
                 required: "※入力は必須です",
@@ -122,7 +122,7 @@ export default function UserEditPage() {
               defaultValue={user ? user.email : ""}
             />
           </div>
-          <div className="text-red-500 grid justify-start items-center col-span-1 pt-[1.5rem]">
+          <div className="text-red-500 grid justify-start items-center pt-[1.5rem]">
             {errors.email && isUsedEmail === ""
               ? errors.email.message
               : isUsedEmail && isUsedEmail}
@@ -131,7 +131,7 @@ export default function UserEditPage() {
           <label className="grid justify-end items-center pt-[1.5rem] text-[1rem]">
             所属
           </label>
-          <div className="grid justify-start items-center col-span-1 pt-[1.5rem]">
+          <div className="grid justify-start items-center pt-[1.5rem]">
             <select
               {...register("app_metadata.tenant_id", {
                 required: "※入力は必須です",
@@ -147,7 +147,7 @@ export default function UserEditPage() {
                 ))}
             </select>
           </div>
-          <div className="text-red-500 grid justify-start items-center col-span-1 pt-[1.5rem]">
+          <div className="text-red-500 grid justify-start items-center pt-[1.5rem]">
             {errors.app_metadata?.tenant_id &&
               errors.app_metadata?.tenant_id.message}
           </div>
@@ -155,7 +155,7 @@ export default function UserEditPage() {
           <label className="grid justify-end items-center pt-[1.5rem] text-[1rem]">
             新しいパスワード
           </label>
-          <div className="grid justify-start items-center col-span-1 pt-[1.5rem]">
+          <div className="grid justify-start items-center pt-[1.5rem]">
             <input
               {...register("password", {
                 required: "※入力は必須です",
@@ -168,14 +168,14 @@ export default function UserEditPage() {
               autoComplete="new-password"
             />
           </div>
-          <div className="text-red-500 grid justify-start items-center col-span-1 pt-[1.5rem]">
+          <div className="text-red-500 grid justify-start items-center pt-[1.5rem]">
             {errors.password && errors.password.message}
           </div>
 
           <label className="grid justify-end items-center pt-[1.5rem] text-[1rem]">
             新しいパスワード（確認）
           </label>
-          <div className="grid justify-start items-center col-span-1 pt-[1.5rem]">
+          <div className="grid justify-start items-center pt-[1.5rem]">
             <input
               {...register("passwordConf", {
                 required: "※入力は必須です",
@@ -190,7 +190,7 @@ export default function UserEditPage() {
               autoComplete="new-password"
             />
           </div>
-          <div className="text-red-500 grid justify-start items-center col-span-1 pt-[1.5rem]">
+          <div className="text-red-500 grid justify-start items-center pt-[1.5rem]">
             {errors.passwordConf && errors.passwordConf.message}
           </div>
         </div>
