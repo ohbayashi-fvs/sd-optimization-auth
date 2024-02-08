@@ -33,6 +33,8 @@ export default function LoginPage() {
     }
   };
 
+  console.log(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+
   return (
     <div>
       <section className="m-[30vh] flex items-center justify-center">
