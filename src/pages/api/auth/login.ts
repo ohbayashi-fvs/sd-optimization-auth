@@ -25,12 +25,12 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
   });
 
   // クライアントのIPアドレスが登録されているものかチェックする
-  const checkedIpAddress = await checkIpAddress(req, res);
+  // const checkedIpAddress = await checkIpAddress(req, res);
 
   // 登録済IPアドレスの中にクライアントのIPアドレスが無ければログアウトする
-  if (!checkedIpAddress) {
-    await supabaseServerClient.auth.signOut();
-  }
+  // if (!checkedIpAddress) {
+  //   await supabaseServerClient.auth.signOut();
+  // }
 
   // session確認
   const session = await checkLogin(req, res);
