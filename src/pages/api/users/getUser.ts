@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { ProfilesType, UserType } from "@/types/type";
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
-import { supabaseAccessUrl, supabaseServiceRoleKey } from "../lib/supabase";
+import type { ProfilesType } from "@/types/type";
+import { createClient } from "../auth/createClinet";
 import checkLogin from "../auth/session";
 
 export default async function getUser(
@@ -12,14 +11,10 @@ export default async function getUser(
   const session = await checkLogin(req, res);
 
   if (session) {
-    const supabaseServerClient = createPagesServerClient<UserType>(
+    const supabaseServerClient = createClient(
       {
         req,
         res,
-      },
-      {
-        supabaseUrl: supabaseAccessUrl,
-        supabaseKey: supabaseServiceRoleKey,
       }
     );
 

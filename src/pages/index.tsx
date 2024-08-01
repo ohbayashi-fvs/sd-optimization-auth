@@ -23,14 +23,7 @@ export default function HomePage() {
                 登録一覧
               </a>
             </td>
-            <td className="px-[1rem]">
-              <a
-                href={"/users/userCreatePage"}
-                className="text-[1rem] text-[#153F8D] underline underline-offset-[0.2rem] decoration-[#153F8D] border-none hover:text-[#008E92] hover:decoration-[#008E92] focus:outline-none"
-              >
-                新規追加
-              </a>
-            </td>
+
           </tr>
           <tr>
             <td className="text-end text-[1.5rem] pr-[1.5rem] py-[1rem]">
@@ -42,14 +35,6 @@ export default function HomePage() {
                 className="text-[1rem] text-[#153F8D] underline underline-offset-[0.2rem] decoration-[#153F8D] border-none hover:text-[#008E92] hover:decoration-[#008E92] focus:outline-none"
               >
                 登録一覧
-              </a>
-            </td>
-            <td className="px-[1rem]">
-              <a
-                href={"/tenants/tenantCreatePage"}
-                className="text-[1rem] text-[#153F8D] underline underline-offset-[0.2rem] decoration-[#153F8D] border-none hover:text-[#008E92] hover:decoration-[#008E92] focus:outline-none"
-              >
-                新規追加
               </a>
             </td>
           </tr>

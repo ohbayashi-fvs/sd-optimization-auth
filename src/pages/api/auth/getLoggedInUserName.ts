@@ -1,19 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
-import { supabaseAccessUrl, supabaseServiceRoleKey } from "../lib/supabase";
+import { createClient } from "./createClinet";
+
 
 export default async function getLoggedInUserName(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const supabaseServerClient = createPagesServerClient(
-    {
-      req,
+  const supabaseServerClient = createClient({req,
       res,
-    },
-    {
-      supabaseUrl: supabaseAccessUrl,
-      supabaseKey: supabaseServiceRoleKey,
     }
   );
   const {

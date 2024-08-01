@@ -2,6 +2,7 @@ import type { Login } from "@/types/auth";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function LoginPage() {
   const {
@@ -11,7 +12,7 @@ export default function LoginPage() {
   } = useForm<Login>();
 
   const router = useRouter();
-
+  const [error, setError] = useState('')
   useQuery({
     queryKey: ["getLoggedInUserName"],
     queryFn: async () => {
@@ -31,13 +32,16 @@ export default function LoginPage() {
     if (res.status === 200) {
       router.push("/");
     }
+    if(res.status === 401){
+      const response = await res.json()
+      if(response.hasOwnProperty('ipAddress'))
+        setError('以下のIPアドレスは登録されていません。「' + response.ipAddress + '」。システム開発者にご連絡ください。')
+    }
   };
 
-  console.log(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 
   return (
-    <div>
-      <section className="m-[30vh] flex items-center justify-center">
+      <section className="m-[30vh] flex items-center justify-center flex-col">
         <form
           onSubmit={handleSubmit(onSubmitLoginButton)}
           className="flex w-[20rem] flex-col gap-2 text-[1.2rem]"
@@ -71,7 +75,8 @@ export default function LoginPage() {
             ログイン
           </button>
         </form>
+        <p className="text-error">{error}</p>    
       </section>
-    </div>
+
   );
 }

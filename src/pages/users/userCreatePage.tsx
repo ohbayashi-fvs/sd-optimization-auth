@@ -57,7 +57,7 @@ export default function UserCreatePage() {
       ) : (
         <div className="max-w-[100rem] mx-auto p-[4.5rem]">
           <form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white">
-            <div className="grid grid-cols-3 gap-[1.2rem] ml-[15rem] mr-[8rem]">
+            <div className="grid grid-cols-3 gap-[1.2rem]">
               <label className="grid justify-end items-center text-[1rem]">
                 ユーザー名
               </label>

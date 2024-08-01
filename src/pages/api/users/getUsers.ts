@@ -1,8 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { UserType } from "@/types/type";
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
-import { supabaseAccessUrl, supabaseServiceRoleKey } from "../lib/supabase";
+import { createClient } from "../auth/createClinet";
 import checkLogin from "../auth/session";
+import checkIpAddress from "../auth/checkIpAddress";
 
 export default async function getUsers(
   req: NextApiRequest,
@@ -10,17 +9,14 @@ export default async function getUsers(
 ) {
   // Session Confirmation
   const session = await checkLogin(req, res);
-
+  const result = await checkIpAddress(req,res)
+  if(!result.isCorrect) return res.status(401).json({ipAddress: result.ipAddress})
   if (session) {
-    const supabaseServerClient = createPagesServerClient<UserType[]>(
+    const supabaseServerClient = createClient(
       {
         req,
         res,
       },
-      {
-        supabaseUrl: supabaseAccessUrl,
-        supabaseKey: supabaseServiceRoleKey,
-      }
     );
 
     // get auth.users

@@ -15,7 +15,7 @@
     "staging:reset": "npx supabase db reset --db-url postgresql://postgres:HY2ITx96DSfOQpg0@db.qdoqudftxecmfjhaowka.supabase.co/postgres",
     "staging": "npm run staging:push",
     "start": "npx supabase start -x vector,edge-runtime,realtime",
-    "stop": "npx supabase stop",
+    "stop": "npx supabase stop --no-backup",
     "sql": "dbml2sql sd.dbml --postgres -o migrations/20230626060237_local.sql",
     "type": "npx supabase gen types typescript --local > ../src/types/public.ts",
     "db:seed:watch": "nodemon --watch seeds/development/seeds.js --exec \"npm run db:seed\"",
@@ -25,16 +25,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@faker-js/faker": "^8.0.2",
-    "knex": "^2.4.2",
-    "pg": "^8.10.0",
-    "uuid": "^9.0.0"
+    "@faker-js/faker": "^8.4.1",
+    "pg": "^8.12.0",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "@dbml/cli": "^2.5.3",
-    "dbdocs": "^0.7.5",
-    "dotenv-cli": "^7.2.1",
-    "nodemon": "^2.0.22",
-    "supabase": "^1.93.0"
+    "@dbml/cli": "^3.6.1",
+    "dbdocs": "^0.10.0",
+    "dotenv-cli": "^7.4.2",
+    "nodemon": "^3.1.4",
+    "supabase": "^1.187.10"
   }
 }

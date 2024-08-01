@@ -1,3 +1,4 @@
+/*
 import { createClient } from "@supabase/supabase-js";
 
 export const supabaseAccessUrl = process.env.NEXT_SUPABASE_URL || "";
@@ -16,19 +17,14 @@ export const supabaseServiceRoleKey =
 // export const supabasePublicServiceRoleKey =
 //   process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY || "";
 
-export const supabaseAdmin = createClient(
-  supabaseAccessUrl,
-  supabaseServiceRoleKey
-);
-
 // export const supabasePublicAdmin = createClient<Database>(
 //   supabasePublicAccessUrl,
 //   supabasePublicServiceRoleKey
 // );
 
-export const supabaseClient = createClient(supabaseAccessUrl, supabaseAnonKey);
 
 // export const supabasePublicClient = createClient<Database>(
 //   supabasePublicAccessUrl,
 //   supabasePublicAnonKey
 // );
+*/
