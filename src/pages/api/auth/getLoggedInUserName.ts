@@ -11,11 +11,11 @@ export default async function getLoggedInUserName(
     }
   );
   const {
-    data: { session },
-  } = await supabaseServerClient.auth.getSession();
+    data: { user},
+  } = await supabaseServerClient.auth.getUser();
 
-  if (session) {
-    res.status(200).json(session?.user.user_metadata.user_name);
+  if (user) {
+    res.status(200).json(user.user_metadata.user_name);
   } else {
     res.status(401).json({});
   }

@@ -55,9 +55,15 @@ export default function UserCreatePage() {
       {isLoading ? (
         <div className="flex justify-center mt-[8rem]">データ取得中...</div>
       ) : (
-        <div className="max-w-[100rem] mx-auto p-[4.5rem]">
+        <div className="max-w-[100rem] mx-auto p-[2rem]">
+
           <form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white">
-            <div className="grid grid-cols-3 gap-[1.2rem]">
+          <div className="grid grid-cols-3 gap-[1rem] ml-[15rem] mr-[8rem]">
+            <h1 className="text-xl text-right">アカウント作成</h1>
+            <div className="col-span-2">
+
+            </div>
+
               <label className="grid justify-end items-center text-[1rem]">
                 ユーザー名
               </label>

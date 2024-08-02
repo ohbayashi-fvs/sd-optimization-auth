@@ -5,6 +5,7 @@
 supabase/node_modules
 /.pnp
 .pnp.js
+.env.production
 .yarn/install-state.gz
 
 # testing

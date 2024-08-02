@@ -1,0 +1,15 @@
+{
+  "allowAnonymousTelemetry": false,
+  "models": [
+    {
+      "title": "GPT-4o",
+      "provider": "openai",
+      "model": "gpt-4o",
+      "apiBase": "https://continue-gpt4o.openai.azure.com/",
+      "apiVersion": "2024-02-15-preview",
+      "engine": "continue-gpt4o",
+      "apiType": "azure",
+      "apiKey": "9f5e3cd11e284e2ebbeb9d48e4b87f3c"
+    }
+  ]
+}
