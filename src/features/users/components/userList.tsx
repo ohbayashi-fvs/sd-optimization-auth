@@ -12,8 +12,8 @@ export const UserList: FC<Props> = ({ columnName, users }) => {
   return !users ? (
     <Spin size="large" className="flex justify-center my-[10rem]" />
   ) : (
-    <div className="max-w-[53rem] mx-auto my-[4.5rem] px-[1rem]">
-      <Table columns={columnName} dataSource={users} rowKey={"id"} />
+    <div className="max-w-[53rem] mx-auto my-[3rem] px-[1rem]">
+      <Table columns={columnName} dataSource={users} rowKey={"id"} size="small"/>
     </div>
   );
 };
