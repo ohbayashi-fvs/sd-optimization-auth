@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { createClient } from "../auth/createClinet";
+import { createClient } from "../auth/createClient";
 import checkLogin from "../auth/session";
 import checkIpAddress from "../auth/checkIpAddress";
 
@@ -8,10 +8,12 @@ export default async function getUsers(
   res: NextApiResponse
 ) {
   // Session Confirmation
-  const session = await checkLogin(req, res);
+  const {isLogin}= await checkLogin(req, res);
   const result = await checkIpAddress(req,res)
   if(!result.isCorrect) return res.status(401).json({ipAddress: result.ipAddress})
-  if (session) {
+  if (!isLogin) {
+    return   res.status(401).json({message: 'not login'});
+  }
     const supabaseServerClient = createClient(
       {
         req,
@@ -22,11 +24,10 @@ export default async function getUsers(
     // get auth.users
     const { data: usersData } =
       await supabaseServerClient.auth.admin.listUsers();
-
     // get public.profile
     const { data: profilesData } = await supabaseServerClient
       .from("profiles")
-      .select("*,tenants(tenant_name)");
+      .select("id, user_name, tenants (tenant_name)");
 
     // Data Coalescing and Refining
     const joinedData = profilesData?.map((profile) => {
@@ -44,7 +45,7 @@ export default async function getUsers(
           id: profile.id,
           user_name: profile.user_name,
           email: user.email,
-          tenant_name: profile.tenants.tenant_name,
+          tenant_name: (profile?.tenants as any)?.tenant_name ?? '',
           last_sign_in_at: date ? date.toLocaleString() : "-",
         };
       }
@@ -56,7 +57,5 @@ export default async function getUsers(
     });
 
     res.status(200).json({ users: filteredData && filteredData });
-  } else {
-    res.status(401).json({});
-  }
+
 }

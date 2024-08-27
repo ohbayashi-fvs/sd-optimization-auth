@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { createClient } from "../auth/createClinet";
+import { createClient } from "../auth/createClient";
 import checkLogin from "../auth/session";
 
 export default async function getTenantTypes(

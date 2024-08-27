@@ -72,7 +72,7 @@ export default function UserCreatePage() {
                   {...register("app_metadata.user_name", {
                     required: "※入力は必須です",
                   })}
-                  className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] pl-[0.3rem]"
+                  className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] px-[0.3rem]"
                   type="text"
                   id="user_name"
                 />
@@ -93,7 +93,7 @@ export default function UserCreatePage() {
                       setIsUsedEmail("");
                     },
                   })}
-                  className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] pl-[0.3rem]"
+                  className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] px-[0.3rem]"
                   type="email"
                   name="email"
                   autoComplete="email"
@@ -114,7 +114,7 @@ export default function UserCreatePage() {
                   {...register("app_metadata.tenant_id", {
                     required: "※入力は必須です",
                   })}
-                  className="h-[2.3rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15.6rem] pl-[0.1rem]"
+                  className="h-[2.3rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15.6rem] px-[0.3rem]"
                 >
                   {tenants &&
                     tenants.map((tenant: any) => (
@@ -140,7 +140,7 @@ export default function UserCreatePage() {
                       return value.length >= 8 || "8文字以上で作成してください";
                     },
                   })}
-                  className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] pl-[0.3rem]"
+                  className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] px-[0.3rem]"
                   type="password"
                   name="password"
                   autoComplete="new-password"
@@ -165,7 +165,7 @@ export default function UserCreatePage() {
                       );
                     },
                   })}
-                  className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] pl-[0.3rem]"
+                  className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] px-[0.3rem]"
                   type="password"
                   autoComplete="new-password"
                   id="passwordConf"

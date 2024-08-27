@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { ProfilesType } from "@/types/type";
-import { createClient } from "../auth/createClinet";
+import { createClient } from "../auth/createClient";
 import checkLogin from "../auth/session";
 
 export default async function getUser(
@@ -8,9 +8,9 @@ export default async function getUser(
   res: NextApiResponse
 ) {
   // session確認
-  const session = await checkLogin(req, res);
+  const {isLogin}= await checkLogin(req, res);
 
-  if (session) {
+  if (isLogin) {
     const supabaseServerClient = createClient(
       {
         req,
@@ -26,7 +26,7 @@ export default async function getUser(
     // get public.profile
     const { data: profileData } = await supabaseServerClient
       .from("profiles")
-      .select("*,tenants(tenant_name)")
+      .select("*,tenants (tenant_name)")
       .eq("id", userData.user?.id);
 
     // Data Coalescing and Refining
@@ -39,7 +39,6 @@ export default async function getUser(
         tenant_id: profile?.tenant_id,
       };
     });
-
     joinedData && res.status(200).json({ user: joinedData });
   } else {
     res.status(401).json({});

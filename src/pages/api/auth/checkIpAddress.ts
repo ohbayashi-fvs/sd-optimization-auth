@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { createClient } from "./createClinet";
+import { createClient } from "./createClient";
 
 export default async function checkIpAddress(
   req: NextApiRequest,
@@ -14,9 +14,9 @@ export default async function checkIpAddress(
 
   // DBから登録しているIPアドレス一覧の取得
   const { data: dbIpAddresses } = await supabaseServerClient
+    .schema('private')
     .from("ip_address")
-    .select("addresses");
-
+    .select("*");
   // クライアントのIPアドレス取得
   const ip = req.headers["x-forwarded-for"] as string;;
   if(process.env.NODE_ENV === 'development' && ip === '::1') return {isCorrect: true}
@@ -24,7 +24,7 @@ export default async function checkIpAddress(
   if(split.length> 1) return {isCorrect: false, ipAddress: ip}
   const pattern = /::ffff:(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/;
   const match = ip.match(pattern)
-  
+   
   if(!match) return {isCorrect: false, ipAddress: ip}; 
   const clientIp = match && match[1];
   const checkIpAddress = dbIpAddresses?.find((ipAddress) => {

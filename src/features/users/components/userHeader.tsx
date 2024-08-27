@@ -7,18 +7,17 @@ export const UserHeader = () => {
   const userPagePath = router.pathname;
 
   const { data: loggedInUserName } = useQuery({
-    queryKey: ["getLoggedInUserName"],
+    queryKey: [ router.route ?? ''],
     queryFn: async () => {
       const res = await fetch("/api/auth/getLoggedInUserName", {
         method: "POST",
       });
-
       if (res.status === 200) {
         return await res.json();
       }
-      res.status === 401 && router.push("/auth/authLoginPage");
     },
   });
+
 
   const selectPage =
     "text-[1rem] text-[#153F8D] underline underline-offset-[0.2rem] decoration-[#153F8D] border-none hover:text-[#008E92] hover:decoration-[#008E92] focus:outline-none";

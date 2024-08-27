@@ -1,7 +1,6 @@
 import type { Login } from "@/types/auth";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 export default function LoginPage() {
@@ -13,15 +12,6 @@ export default function LoginPage() {
 
   const router = useRouter();
   const [error, setError] = useState('')
-  useQuery({
-    queryKey: ["getLoggedInUserName"],
-    queryFn: async () => {
-      const res = await fetch("/api/auth/getLoggedInUserName", {
-        method: "POST",
-      });
-      res.status === 200 && router.push("/");
-    },
-  });
 
   const onSubmitLoginButton = async (val: Login) => {
     const res = await fetch("/api/auth/login", {
@@ -34,6 +24,8 @@ export default function LoginPage() {
     }
     if(res.status === 401){
       const response = await res.json()
+      if(response.hasOwnProperty('message'))
+        setError(response.message)
       if(response.hasOwnProperty('ipAddress'))
         setError('以下のIPアドレスは登録されていません。「' + response.ipAddress + '」。システム開発者にご連絡ください。')
     }

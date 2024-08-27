@@ -5,19 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const Header = () => {
   const router = useRouter();
 
-  const { data: loggedInUserName } = useQuery({
-    queryKey: ["getLoggedInUserName"],
-    queryFn: async () => {
-      const res = await fetch("/api/auth/getLoggedInUserName", {
-        method: "POST",
-      });
-
-      if (res.status === 200) {
-        return await res.json();
-      }
-      res.status === 401 && router.push("/auth/authLoginPage");
-    },
-  });
 
   return (
     <>
