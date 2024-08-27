@@ -5,18 +5,16 @@ import checkLogin from "../auth/session";
 
 export default async function getUser(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   // session確認
-  const {isLogin}= await checkLogin(req, res);
+  const { isLogin } = await checkLogin(req, res);
 
   if (isLogin) {
-    const supabaseServerClient = createClient(
-      {
-        req,
-        res,
-      }
-    );
+    const supabaseServerClient = createClient({
+      req,
+      res,
+    });
 
     // get auth.user
     const user = JSON.parse(req.body);

@@ -5,39 +5,41 @@ import checkIpAddress from "./checkIpAddress";
 
 export default async function login(req: NextApiRequest, res: NextApiResponse) {
   const supabaseServerClient = createClient({
-      req,
-      res,
-    },
-  );
+    req,
+    res,
+  });
 
   // ログイン
   const loginData = JSON.parse(req.body);
 
-  const  loginResult = await supabaseServerClient.auth.signInWithPassword({
+  const loginResult = await supabaseServerClient.auth.signInWithPassword({
     email: loginData.email,
     password: loginData.password,
   });
-  if(!loginResult.data?.user) return res.status(401).json({message: 'メールアドレスかパスワードが間違っています。'})
-  if(!loginResult.data?.user?.user_metadata?.is_account_kanrisha){
-    supabaseServerClient.auth.signOut()
-    return res.status(401).json({message: 'IPアドレスが許可されていません。'})
+  if (!loginResult.data?.user)
+    return res
+      .status(401)
+      .json({ message: "メールアドレスかパスワードが間違っています。" });
+  if (!loginResult.data?.user?.user_metadata?.is_account_kanrisha) {
+    supabaseServerClient.auth.signOut();
+    return res
+      .status(401)
+      .json({ message: "IPアドレスが許可されていません。" });
   }
   //クライアントのIPアドレスが登録されているものかチェックする
-  const result = await checkIpAddress(req,res)
-  if(!result.isCorrect) {
-    await supabaseServerClient.auth.signOut()
-    return res.status(401).json({ipAddress: result.ipAddress})
+  const result = await checkIpAddress(req, res);
+  if (!result.isCorrect) {
+    await supabaseServerClient.auth.signOut();
+    return res.status(401).json({ ipAddress: result.ipAddress });
   }
   // session確認
-  const {isLogin}= await checkLogin(req, res);
+  const { isLogin } = await checkLogin(req, res);
 
   //フラグがあるかどうかの確認
-  
+
   if (isLogin) {
     res.status(200).json({});
   } else {
     res.status(401).json({});
   }
 }
-
-

@@ -5,15 +5,13 @@ import checkLogin from "../auth/session";
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   // session確認
-  const {isLogin}= await checkLogin(req, res);
+  const { isLogin } = await checkLogin(req, res);
 
   if (isLogin) {
-    const supabaseServerClient = createClient(
-      {
-        req,
-        res,
-      }
-    );
+    const supabaseServerClient = createClient({
+      req,
+      res,
+    });
     const user = await JSON.parse(req.body);
 
     const data = await supabaseServerClient.auth.admin.updateUserById(user.id, {

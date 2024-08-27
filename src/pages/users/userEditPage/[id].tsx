@@ -47,7 +47,7 @@ export default function UserEditPage() {
       res.status === 401 && router.push("/auth/authLoginPage");
     },
   });
-    // logical delete user_data
+  // logical delete user_data
   const onClickDeleteButton = async () => {
     if (confirm("本当に削除しますか") === true) {
       const res = await fetch("/api/users/deleteUser", {
@@ -82,10 +82,9 @@ export default function UserEditPage() {
   ) : (
     <div className="max-w-[100rem] mx-auto p-[4.5rem]">
       <form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white">
-
         <div className="grid grid-cols-3 gap-[1.2rem] ml-[15rem] mr-[6rem]">
           <h1 className="text-xl text-right">アカウント編集</h1>
-        <div className="col-span-2"></div>
+          <div className="col-span-2"></div>
           <label className="grid justify-end items-center text-[1rem]">
             ユーザー名
           </label>

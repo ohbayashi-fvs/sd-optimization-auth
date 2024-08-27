@@ -5,12 +5,14 @@ import { useQuery } from "@tanstack/react-query";
 export const Header = () => {
   const router = useRouter();
 
-
   return (
     <>
       <header className="flex h-[54px] w-full items-center justify-between bg-header">
         <div>
-          <Link href="/" className="h-[23px] flex items-center gap-2 justify-center font-bold no-underline">
+          <Link
+            href="/"
+            className="h-[23px] flex items-center gap-2 justify-center font-bold no-underline"
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/shingou_logo@2x.png"
