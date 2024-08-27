@@ -1,22 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { createClient } from "./createClinet";
-
+import { createClient } from "./createClient";
+import checkLogin from "./session";
 
 export default async function getLoggedInUserName(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
-  const supabaseServerClient = createClient({req,
-      res,
-    }
-  );
-  const {
-    data: { user},
-  } = await supabaseServerClient.auth.getUser();
-
-  if (user) {
-    res.status(200).json(user.user_metadata.user_name);
-  } else {
-    res.status(401).json({});
-  }
+  const { isLogin, user } = await checkLogin(req, res);
+  if (!isLogin) return res.status(401).json({ error: "ログインエラー" });
+  res.status(200).json(user?.app_metadata.user_name);
 }

@@ -19,7 +19,6 @@ export default function UserHomePage() {
       res.status === 401 && router.push("/auth/authLoginPage");
     },
   });
-
   const columnName: ColumnsType<Record<string, any>> = [
     {
       key: "user_name",

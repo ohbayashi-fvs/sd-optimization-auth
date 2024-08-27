@@ -5,25 +5,14 @@ import { useQuery } from "@tanstack/react-query";
 export const Header = () => {
   const router = useRouter();
 
-  const { data: loggedInUserName } = useQuery({
-    queryKey: ["getLoggedInUserName"],
-    queryFn: async () => {
-      const res = await fetch("/api/auth/getLoggedInUserName", {
-        method: "POST",
-      });
-
-      if (res.status === 200) {
-        return await res.json();
-      }
-      res.status === 401 && router.push("/auth/authLoginPage");
-    },
-  });
-
   return (
     <>
       <header className="flex h-[54px] w-full items-center justify-between bg-header">
         <div>
-          <Link href="/" className="h-[23px] flex items-center gap-2 justify-center font-bold no-underline">
+          <Link
+            href="/"
+            className="h-[23px] flex items-center gap-2 justify-center font-bold no-underline"
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/shingou_logo@2x.png"

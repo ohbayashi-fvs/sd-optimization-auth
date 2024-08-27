@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { Spin } from "antd";
 
 export default function UserEditPage() {
   const {
@@ -36,8 +35,6 @@ export default function UserEditPage() {
       res.status === 401 && router.push("/auth/authLoginPage");
     },
   });
-
-  // get public.tenants
   const { data: tenants, isLoading: tenantsDataIsLoading } = useQuery({
     queryKey: ["getTenants"],
     queryFn: async () => {
@@ -50,7 +47,6 @@ export default function UserEditPage() {
       res.status === 401 && router.push("/auth/authLoginPage");
     },
   });
-
   // logical delete user_data
   const onClickDeleteButton = async () => {
     if (confirm("本当に削除しますか") === true) {
@@ -58,7 +54,7 @@ export default function UserEditPage() {
         method: "POST",
         body: JSON.stringify({ id: router.query.id }),
       });
-      res.status === 200 && router.push("/users");
+      res.status === 200 && router.push("/");
       res.status === 401 && router.push("/auth/authLoginPage");
     }
   };
@@ -75,7 +71,7 @@ export default function UserEditPage() {
         user_name: val.app_metadata.user_name,
       }),
     });
-    res.status === 200 && router.push("/users");
+    res.status === 200 && router.push("/");
     res.status === 401 && router.push("/auth/authLoginPage");
     res.status === 500 &&
       setIsUsedEmail("送信したメールアドレスは使用されています");
@@ -86,10 +82,9 @@ export default function UserEditPage() {
   ) : (
     <div className="max-w-[100rem] mx-auto p-[4.5rem]">
       <form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white">
-
         <div className="grid grid-cols-3 gap-[1.2rem] ml-[15rem] mr-[6rem]">
           <h1 className="text-xl text-right">アカウント編集</h1>
-        <div className="col-span-2"></div>
+          <div className="col-span-2"></div>
           <label className="grid justify-end items-center text-[1rem]">
             ユーザー名
           </label>
@@ -140,7 +135,7 @@ export default function UserEditPage() {
                 required: "※入力は必須です",
               })}
               className="h-[2.3rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15.6rem] pl-[0.1rem]"
-              defaultValue={user.tenant_id}
+              defaultValue={user?.tenant_id}
             >
               {tenants &&
                 tenants.map((tenant: any) => (

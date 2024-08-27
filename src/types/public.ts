@@ -91,7 +91,7 @@ export interface Database {
             columns: ["user_id"];
             referencedRelation: "users";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       tenants: {
@@ -171,7 +171,7 @@ export interface Database {
             columns: ["owner"];
             referencedRelation: "users";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       migrations: {
@@ -238,7 +238,7 @@ export interface Database {
             columns: ["bucket_id"];
             referencedRelation: "buckets";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
     };

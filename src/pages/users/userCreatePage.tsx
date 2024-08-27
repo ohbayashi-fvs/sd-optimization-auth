@@ -56,13 +56,10 @@ export default function UserCreatePage() {
         <div className="flex justify-center mt-[8rem]">データ取得中...</div>
       ) : (
         <div className="max-w-[100rem] mx-auto p-[2rem]">
-
           <form onSubmit={handleSubmit(onSubmit)} className="w-full bg-white">
-          <div className="grid grid-cols-3 gap-[1rem] ml-[15rem] mr-[8rem]">
-            <h1 className="text-xl text-right">アカウント作成</h1>
-            <div className="col-span-2">
-
-            </div>
+            <div className="grid grid-cols-3 gap-[1rem] ml-[15rem] mr-[8rem]">
+              <h1 className="text-xl text-right">アカウント作成</h1>
+              <div className="col-span-2"></div>
 
               <label className="grid justify-end items-center text-[1rem]">
                 ユーザー名
@@ -72,7 +69,7 @@ export default function UserCreatePage() {
                   {...register("app_metadata.user_name", {
                     required: "※入力は必須です",
                   })}
-                  className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] pl-[0.3rem]"
+                  className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] px-[0.3rem]"
                   type="text"
                   id="user_name"
                 />
@@ -93,7 +90,7 @@ export default function UserCreatePage() {
                       setIsUsedEmail("");
                     },
                   })}
-                  className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] pl-[0.3rem]"
+                  className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] px-[0.3rem]"
                   type="email"
                   name="email"
                   autoComplete="email"
@@ -114,7 +111,7 @@ export default function UserCreatePage() {
                   {...register("app_metadata.tenant_id", {
                     required: "※入力は必須です",
                   })}
-                  className="h-[2.3rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15.6rem] pl-[0.1rem]"
+                  className="h-[2.3rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15.6rem] px-[0.3rem]"
                 >
                   {tenants &&
                     tenants.map((tenant: any) => (
@@ -140,7 +137,7 @@ export default function UserCreatePage() {
                       return value.length >= 8 || "8文字以上で作成してください";
                     },
                   })}
-                  className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] pl-[0.3rem]"
+                  className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] px-[0.3rem]"
                   type="password"
                   name="password"
                   autoComplete="new-password"
@@ -165,7 +162,7 @@ export default function UserCreatePage() {
                       );
                     },
                   })}
-                  className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] pl-[0.3rem]"
+                  className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] px-[0.3rem]"
                   type="password"
                   autoComplete="new-password"
                   id="passwordConf"

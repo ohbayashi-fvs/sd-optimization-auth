@@ -112,7 +112,7 @@ export interface Database {
             columns: ["user_id"];
             referencedRelation: "users";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       instances: {
@@ -167,7 +167,7 @@ export interface Database {
             columns: ["session_id"];
             referencedRelation: "sessions";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       mfa_challenges: {
@@ -198,7 +198,7 @@ export interface Database {
             columns: ["factor_id"];
             referencedRelation: "mfa_factors";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       mfa_factors: {
@@ -238,7 +238,7 @@ export interface Database {
             columns: ["user_id"];
             referencedRelation: "users";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       refresh_tokens: {
@@ -281,7 +281,7 @@ export interface Database {
             columns: ["session_id"];
             referencedRelation: "sessions";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       saml_providers: {
@@ -321,7 +321,7 @@ export interface Database {
             columns: ["sso_provider_id"];
             referencedRelation: "sso_providers";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       saml_relay_states: {
@@ -361,7 +361,7 @@ export interface Database {
             columns: ["sso_provider_id"];
             referencedRelation: "sso_providers";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       schema_migrations: {
@@ -410,7 +410,7 @@ export interface Database {
             columns: ["user_id"];
             referencedRelation: "users";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       sso_domains: {
@@ -441,7 +441,7 @@ export interface Database {
             columns: ["sso_provider_id"];
             referencedRelation: "sso_providers";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       sso_providers: {
