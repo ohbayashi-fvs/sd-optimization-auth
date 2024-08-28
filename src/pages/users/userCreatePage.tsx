@@ -1,10 +1,9 @@
-import type { UserType } from "@/types/type";
-import { UserHeader } from "@/features/users/components/userHeader";
-import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import { Spin } from "antd";
+import type { UserType } from '@/types/type'
+import { UserHeader } from '@/features/users/components/userHeader'
+import { useRouter } from 'next/router'
+import { useForm } from 'react-hook-form'
+import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 
 export default function UserCreatePage() {
   const {
@@ -12,42 +11,42 @@ export default function UserCreatePage() {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<UserType>();
+  } = useForm<UserType>()
 
-  const router = useRouter();
+  const router = useRouter()
 
-  const [isUsedEmail, setIsUsedEmail] = useState<string>("");
+  const [isUsedEmail, setIsUsedEmail] = useState<string>('')
 
   // get tenants
   const { data: tenants, isLoading } = useQuery({
-    queryKey: ["getTenants"],
+    queryKey: ['getTenants'],
     queryFn: async () => {
-      const res = await fetch("/api/tenants/getTenants", { method: "POST" });
+      const res = await fetch('/api/tenants/getTenants', { method: 'POST' })
 
       if (res.status === 200) {
-        const resData = await res.json();
-        return await resData.tenants;
+        const resData = await res.json()
+        return await resData.tenants
       }
-      res.status === 401 && router.push("/auth/authLoginPage");
+      res.status === 401 && router.push('/')
     },
-  });
+  })
 
   // create user
   const onSubmit = async (val: UserType) => {
-    const res = await fetch("/api/users/createUser", {
-      method: "POST",
+    const res = await fetch('/api/users/createUser', {
+      method: 'POST',
       body: JSON.stringify({
         user_name: val.app_metadata.user_name,
         email: val.email,
         tenant_id: val.app_metadata.tenant_id,
         password: val.password,
       }),
-    });
-    res.status === 200 && router.push("/users");
-    res.status === 401 && router.push("/auth/authLoginPage");
+    })
+    res.status === 200 && router.push('/users')
+    res.status === 401 && router.push('/')
     res.status === 422 &&
-      setIsUsedEmail("送信したメールアドレスは使用されています");
-  };
+      setIsUsedEmail('送信したメールアドレスは使用されています')
+  }
 
   return (
     <>
@@ -66,8 +65,8 @@ export default function UserCreatePage() {
               </label>
               <div className="grid justify-start items-center">
                 <input
-                  {...register("app_metadata.user_name", {
-                    required: "※入力は必須です",
+                  {...register('app_metadata.user_name', {
+                    required: '※入力は必須です',
                   })}
                   className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] px-[0.3rem]"
                   type="text"
@@ -84,10 +83,10 @@ export default function UserCreatePage() {
               </label>
               <div className="grid justify-start items-center pt-[1.5rem]">
                 <input
-                  {...register("email", {
-                    required: "※入力は必須です",
+                  {...register('email', {
+                    required: '※入力は必須です',
                     onChange: () => {
-                      setIsUsedEmail("");
+                      setIsUsedEmail('')
                     },
                   })}
                   className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] px-[0.3rem]"
@@ -98,7 +97,7 @@ export default function UserCreatePage() {
                 />
               </div>
               <div className="text-red-500 grid justify-start items-center pt-[1.5rem]">
-                {errors.email && isUsedEmail === ""
+                {errors.email && isUsedEmail === ''
                   ? errors.email.message
                   : isUsedEmail && isUsedEmail}
               </div>
@@ -108,8 +107,8 @@ export default function UserCreatePage() {
               </label>
               <div className="grid justify-start items-center pt-[1.5rem]">
                 <select
-                  {...register("app_metadata.tenant_id", {
-                    required: "※入力は必須です",
+                  {...register('app_metadata.tenant_id', {
+                    required: '※入力は必須です',
                   })}
                   className="h-[2.3rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15.6rem] px-[0.3rem]"
                 >
@@ -131,10 +130,10 @@ export default function UserCreatePage() {
               </label>
               <div className="grid justify-start items-center pt-[1.5rem]">
                 <input
-                  {...register("password", {
-                    required: "※入力は必須です",
+                  {...register('password', {
+                    required: '※入力は必須です',
                     validate: (value) => {
-                      return value.length >= 8 || "8文字以上で作成してください";
+                      return value.length >= 8 || '8文字以上で作成してください'
                     },
                   })}
                   className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] px-[0.3rem]"
@@ -153,13 +152,13 @@ export default function UserCreatePage() {
               </label>
               <div className="grid justify-start items-center pt-[1.5rem]">
                 <input
-                  {...register("passwordConf", {
-                    required: "※入力は必須です",
+                  {...register('passwordConf', {
+                    required: '※入力は必須です',
                     validate: (value) => {
                       return (
-                        value === getValues("password") ||
-                        "パスワードが一致しません"
-                      );
+                        value === getValues('password') ||
+                        'パスワードが一致しません'
+                      )
                     },
                   })}
                   className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] px-[0.3rem]"
@@ -184,5 +183,5 @@ export default function UserCreatePage() {
         </div>
       )}
     </>
-  );
+  )
 }
