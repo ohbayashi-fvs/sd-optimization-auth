@@ -25,10 +25,12 @@ export default function LoginPage() {
     if (res.status === 401) {
       const response = await res.json()
       if (response.hasOwnProperty('message')) setError(response.message)
-      if (response.hasOwnProperty('ipAddress'))
+      if (response.hasOwnProperty('ipAddress1'))
         setError(
           '以下のIPアドレスは登録されていません。「' +
-            response.ipAddress +
+            response.ipAddress1 +
+            ', ' +
+            response.ipAddress2 +
             '」。システム開発者にご連絡ください。',
         )
     }
@@ -40,7 +42,7 @@ export default function LoginPage() {
         onSubmit={handleSubmit(onSubmitLoginButton)}
         className="flex w-[20rem] flex-col gap-2 text-[1.2rem]"
       >
-        <label className="block text-gray-700 text-sm font-bold mb-2">
+        <label className="block text-gray-700 text-sm font-bold">
           メールアドレス
         </label>
         <input
@@ -51,7 +53,7 @@ export default function LoginPage() {
           className="h-[1.5rem] rounded border-solid border-main p-2 text-[1.2rem]"
         />
         {errors.email && errors.email.message}
-        <label className="block text-gray-700 text-sm font-bold mb-2">
+        <label className="block text-gray-700 text-sm font-bold mt-3">
           パスワード
         </label>
         <input
@@ -69,7 +71,7 @@ export default function LoginPage() {
           ログイン
         </button>
       </form>
-      <p className="text-error">{error}</p>
+      <span className="text-error">{error}</span>
     </section>
   )
 }

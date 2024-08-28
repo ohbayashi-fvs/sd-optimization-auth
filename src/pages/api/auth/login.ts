@@ -20,13 +20,15 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
     return res.status(401).json({ message: loginResult.error?.message })
   if (!loginResult.data?.user?.user_metadata?.is_account_kanrisha) {
     supabaseServerClient.auth.signOut()
-    return res.status(401).json({ message: 'IPアドレスが許可されていません。' })
+    return res
+      .status(401)
+      .json({ message: 'このユーザーのログインは許可されていません。' })
   }
   //クライアントのIPアドレスが登録されているものかチェックする
   const result = await checkIpAddress(req, res)
   if (!result.isCorrect) {
     await supabaseServerClient.auth.signOut()
-    return res.status(401).json({ ipAddress: result.ipAddress })
+    return res.status(401).json({ ipAddress1: result.ipAddress1 })
   }
   // session確認
   const { isLogin } = await checkLogin(req, res)

@@ -1,15 +1,18 @@
 {
   "name": "sd-optimization-account-kanri",
   "version": "0.1.0",
+  "engines": {
+    "node": "20.x"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev -p 4343",
     "build": "next build",
     "dc:auth": "gcloud auth configure-docker asia-northeast2-docker.pkg.dev",
-    "dc:b": "docker build -t test .",
-    "dc:build": "docker build -t asia-northeast2-docker.pkg.dev/shingou-denzai-12658/sd20240827/my-image:v1.0 .",
+    "dc:build": "docker build --platform linux/amd64 -t asia-northeast2-docker.pkg.dev/shingou-denzai-12658/sd20240827/my-image:v1.0 .",
+    "dc:local-run": "docker run -p 8080:8080 asia-northeast2-docker.pkg.dev/shingou-denzai-12658/sd20240827/my-image:v1.0",
     "dc:push": "docker push asia-northeast2-docker.pkg.dev/shingou-denzai-12658/sd20240827/my-image:v1.0",
-    "dc:deploy": "gcloud run deploy --image asia-northeast2-docker.pkg.dev/shingou-denzai-12658/sd20240827/my-image:v1.0 --platform=managed --project=shingou-denzai-12658",
+    "dc:deploy": "gcloud run deploy --image asia-northeast2-docker.pkg.dev/shingou-denzai-12658/sd20240827/my-image:v1.0 --platform=managed --project=shingou-denzai-12658 --port=8080",
     "start": "next start",
     "lint": "next lint"
   },
