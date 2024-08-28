@@ -1,12 +1,12 @@
-import type { UserType } from "@/types/type";
-import { FC } from "react";
-import { Spin, Table } from "antd/";
-import { ColumnsType } from "antd/es/table";
+import type { UserType } from '@/types/type'
+import { FC } from 'react'
+import { Spin, Table } from 'antd/'
+import { ColumnsType } from 'antd/es/table'
 
 type Props = {
-  columnName: ColumnsType<Record<string, any>>;
-  users: UserType[];
-};
+  columnName: ColumnsType<Record<string, any>>
+  users: UserType[]
+}
 
 export const UserList: FC<Props> = ({ columnName, users }) => {
   return !users ? (
@@ -16,9 +16,9 @@ export const UserList: FC<Props> = ({ columnName, users }) => {
       <Table
         columns={columnName}
         dataSource={users}
-        rowKey={"id"}
+        rowKey={'id'}
         size="small"
       />
     </div>
-  );
-};
+  )
+}

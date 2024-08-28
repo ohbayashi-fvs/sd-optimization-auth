@@ -1,23 +1,30 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
 
+Supabaseはsd-optimizationリポジトリにあるので、
+ローカル開発の場合、そちらを起動しておいてください。
 
 ```bash
 npm install
 npm run dev
 # then
-cd supabase
-npm install
-npm run start
 ```
 
-## Learn More
-このプロジェクトはモノレポでフロントエンドがルート配下にあり、
-バックエンド(Supabase)がsupabaseフォルダ配下にあります。
-supabaseフォルダの中のsupabase CLIライブラリが古いとうまく動かないことが多いので注意しましょう。
-
-
 ## deploy
-git push, margeにてフロント側のstaging環境が自動で更新します。
-バックエンド側はSupabase CLIを叩いて変更するようになっています。
+
+gloudのパスが通っていることを確認してください。
+パスが通っていない場合、ここらへんを参考に通しておいてください。
+https://cloud.google.com/sdk/docs/install-sdk?hl=ja
+
+Google Cloud認証
+npm run dc:auth
+
+Dockerビルド
+npm run dc:build
+
+DockerをArtifact Registryにpush ※費用のため、Artifact Registryに500MB以上ファイルを入れないように注意
+npm run dc:push
+
+Artifact Registryのイメージを元にCloud Runでdeploy
+Cloud Runにて、my-imageを選択、「新しいリビジョンの編集とデプロイ」をクリック
+コンテナイメージのURLから新しいArtifact Registryを選択する。
+「デプロイ」ボタンをクリックする。

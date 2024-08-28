@@ -1,9 +1,9 @@
-import { useRouter } from "next/router";
-import Link from "next/link";
-import { useQuery } from "@tanstack/react-query";
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import { useQuery } from '@tanstack/react-query'
 
 export const Header = () => {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <>
@@ -23,12 +23,12 @@ export const Header = () => {
           </Link>
         </div>
         <Link
-          href={""}
+          href={''}
           onClick={async (e) => {
-            e.preventDefault();
-            await fetch("/api/auth/logout", {
-              method: "POST",
-            }).then(() => router.push("/auth/authLoginPage"));
+            e.preventDefault()
+            await fetch('/api/auth/logout', {
+              method: 'POST',
+            }).then(() => router.push('/'))
           }}
           className="text-white pr-[1rem] bg-header no-underline"
         >
@@ -36,5 +36,5 @@ export const Header = () => {
         </Link>
       </header>
     </>
-  );
-};
+  )
+}
