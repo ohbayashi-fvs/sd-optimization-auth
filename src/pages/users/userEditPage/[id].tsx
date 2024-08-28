@@ -13,7 +13,7 @@ export default function UserEditPage() {
   } = useForm<UserType>()
 
   const router = useRouter()
-
+  const [error, setError] = useState('')
   const [isUsedEmail, setIsUsedEmail] = useState<string>('')
 
   const userId = router.query.id
@@ -54,8 +54,7 @@ export default function UserEditPage() {
         method: 'POST',
         body: JSON.stringify({ id: router.query.id }),
       })
-      res.status === 200 && router.push('/')
-      res.status === 401 && router.push('/')
+      if (res.status === 200) router.push('../')
     }
   }
 
@@ -71,10 +70,9 @@ export default function UserEditPage() {
         user_name: val.app_metadata.user_name,
       }),
     })
-    res.status === 200 && router.push('/')
-    res.status === 401 && router.push('/')
-    res.status === 500 &&
-      setIsUsedEmail('送信したメールアドレスは使用されています')
+    const response = await res.json()
+    if (res.status === 200) router.push('../')
+    if (res.status === 401) setError(response.message)
   }
 
   return userDataIsLoading || tenantsDataIsLoading ? (
@@ -158,7 +156,7 @@ export default function UserEditPage() {
               {...register('password', {
                 required: '※入力は必須です',
                 validate: (value: string) => {
-                  return value.length >= 8 || '※8文字以上で作成してください'
+                  return value.length >= 10 || '※10文字以上で作成してください'
                 },
               })}
               className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] pl-[0.3rem]"
@@ -225,6 +223,7 @@ export default function UserEditPage() {
           </div>
         </div>
       </form>
+      <span className="text-error">{error}</span>
     </div>
   )
 }

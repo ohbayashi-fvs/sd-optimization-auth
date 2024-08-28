@@ -42,8 +42,7 @@ export default function UserCreatePage() {
         password: val.password,
       }),
     })
-    res.status === 200 && router.push('/users')
-    res.status === 401 && router.push('/')
+    res.status === 200 && router.push('../')
     res.status === 422 &&
       setIsUsedEmail('送信したメールアドレスは使用されています')
   }
@@ -133,7 +132,9 @@ export default function UserCreatePage() {
                   {...register('password', {
                     required: '※入力は必須です',
                     validate: (value) => {
-                      return value.length >= 8 || '8文字以上で作成してください'
+                      return (
+                        value.length >= 10 || '10文字以上で作成してください'
+                      )
                     },
                   })}
                   className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] px-[0.3rem]"

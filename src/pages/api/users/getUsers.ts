@@ -33,14 +33,13 @@ export default async function getUsers(
         return user
       }
     })
-
     if (user) {
       const date =
         user.last_sign_in_at && new Date(user.last_sign_in_at as string)
 
       return {
         id: profile.id,
-        user_name: profile.user_name,
+        user_name: user.user_metadata.user_name,
         email: user.email,
         tenant_name: (profile as any)?.tenant_name ?? '',
         last_sign_in_at: date ? date.toLocaleDateString('ja-JP') : '-',
