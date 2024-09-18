@@ -63,3 +63,8 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+.ant-table-tbody > tr > td {
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+}
