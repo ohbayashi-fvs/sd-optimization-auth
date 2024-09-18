@@ -22,10 +22,10 @@ export default function UserHomePage() {
   const columnName: ColumnsType<Record<string, any>> = [
     {
       key: 'user_name',
-      title: 'ユーザー名',
+      title: '名前',
       dataIndex: 'user_name',
     },
-    { key: 'email', title: 'ユーザーアドレス', dataIndex: 'email' },
+    { key: 'email', title: 'メールアドレス', dataIndex: 'email' },
     {
       key: 'organization',
       title: '組織',

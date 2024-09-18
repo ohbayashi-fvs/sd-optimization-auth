@@ -60,7 +60,7 @@ export default function UserCreatePage() {
               <div className="col-span-2"></div>
 
               <label className="grid justify-end items-center text-[1rem]">
-                ユーザー名
+                名前
               </label>
               <div className="grid justify-start items-center">
                 <input

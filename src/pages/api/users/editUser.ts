@@ -23,7 +23,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         user_name: user.user_name,
       },
     })
-    console.log(data.error)
+    console.error(data.error)
     if (data.error) return res.status(401).json({ message: data.error.message })
     res.status(200).json({})
   } else {
