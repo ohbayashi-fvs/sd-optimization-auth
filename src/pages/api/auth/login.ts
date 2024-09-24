@@ -30,14 +30,6 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
     await supabaseServerClient.auth.signOut()
     return res.status(401).json({ ipAddress1: result.ipAddress1 })
   }
-  // session確認
-  const { isLogin } = await checkLogin(req, res)
 
-  //フラグがあるかどうかの確認
-
-  if (isLogin) {
-    res.status(200).json({})
-  } else {
-    res.status(401).json({})
-  }
+  return res.status(200).json({})
 }
