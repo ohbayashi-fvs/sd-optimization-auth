@@ -3,18 +3,29 @@ import { UserList } from '@/features/users/components/userList'
 import { UserHeader } from '@/features/users/components/userHeader'
 import { useQuery } from '@tanstack/react-query'
 import { ColumnsType } from 'antd/es/table'
+import { useRef, useState } from 'react'
 
 export default function UserHomePage() {
   const router = useRouter()
+  const [filter, setFilter] = useState('')
+  const inputRef = useRef<HTMLInputElement>(null)
 
   // get users_data
   const { data: users } = useQuery({
-    queryKey: ['getUsers'],
+    queryKey: ['getUsers', filter],
     queryFn: async () => {
       const res = await fetch('/api/users/getUsers', { method: 'POST' })
       if (res.status === 200) {
         const resData = await res.json()
-        return await resData.users
+        const data: any[] = await resData.users
+        if (filter === '') {
+          return data
+        }
+        return data.filter(
+          (d) =>
+            d.email?.includes(filter ?? '') ||
+            (d as any).user_name?.includes(filter ?? ''),
+        )
       }
       res.status === 401 && router.push('/')
     },
@@ -62,7 +73,20 @@ export default function UserHomePage() {
   return (
     <>
       <UserHeader />
-      <UserList columnName={columnName} users={users} />
+      <UserList
+        columnName={columnName}
+        users={users as any[]}
+        onSubmit={(e) => {
+          e.preventDefault()
+          if (filter.length > 0) {
+            setFilter('')
+          } else {
+            setFilter(inputRef.current?.value ?? '')
+          }
+        }}
+        inputRef={inputRef}
+        filter={filter}
+      />
     </>
   )
 }
