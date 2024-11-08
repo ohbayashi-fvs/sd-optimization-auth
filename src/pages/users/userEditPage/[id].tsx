@@ -156,7 +156,7 @@ export default function UserEditPage() {
               {...register('password', {
                 required: '※入力は必須です',
                 validate: (value: string) => {
-                  return value.length >= 10 || '※10文字以上で作成してください'
+                  return value.length >= 8 || '※8文字以上で作成してください'
                 },
               })}
               className="h-[2rem] rounded-sm border-[0.1rem] border-main text-[1rem] min-w-[15rem] pl-[0.3rem]"
