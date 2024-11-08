@@ -11,6 +11,8 @@ npm run dev
 
 ## deploy
 
+もしかしから、Rancher Desktopだとbuildできないかも？ Dockerデスクトップ推奨
+
 deployが今のところけっこう面倒です。
 gloudのパスが通っていることを確認してください。
 パスが通っていない場合、ここらへんを参考に通しておいてください。
